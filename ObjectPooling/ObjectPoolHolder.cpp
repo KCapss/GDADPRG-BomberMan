@@ -1,6 +1,7 @@
 #include "ObjectPoolHolder.h"
 
 string ObjectPoolHolder::ENEMY_POOL_TAG = "EnemyPool";
+string ObjectPoolHolder::PROJECT_POOL_TAG = "ProjectilePool";
 ObjectPoolHolder* ObjectPoolHolder::sharedInstance = NULL;
 
 ObjectPoolHolder* ObjectPoolHolder::getInstance()

@@ -32,8 +32,8 @@ void HUD::initialize()
 	float gameWidth = Game::GAME_WINDOW_WIDTH;
 	float gameHeight = Game::GAME_WINDOW_HEIGHT;
 
-	this->setPosition(gameWidth - textureSize.x/1.9f, gameHeight - textureSize.y/1.5f);
-	//this->setPosition(Game::GAME_WINDOW_WIDTH / 2, Game::GAME_WINDOW_HEIGHT / 2);
+	this->setPosition(gameWidth - textureSize.x/2.0f, textureSize.y/2.0f);
+	
 
 	//Button Rendering
 	sf::Texture* btnNormal = TextureManager::getInstance()->getTexture("btn_normal");

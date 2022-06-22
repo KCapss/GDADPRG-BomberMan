@@ -24,6 +24,7 @@ void MainMenuScreen::initialize()
 	sprite->setTexture(*TextureManager::getInstance()->getTexture("ui_bg"));
 	sf::Vector2u textureSize = sprite->getTexture()->getSize();
 	sprite->setOrigin(textureSize.x / 2, textureSize.y / 2);
+	sprite->setScale(sf::Vector2f(8.0f, 6.0f));
 
 	Renderer* renderer = new Renderer("MainMenuScreen");
 	renderer->assignDrawable(sprite);
@@ -53,24 +54,24 @@ void MainMenuScreen::initialize()
 	this->button_1 = new UIButton("Yes_btn", btnNormal, btnPressed);
 	this->attachChild(this->button_1);
 	this->button_1->setPosition(-150, 150);
-	this->button_1->getTransformable()->setScale(0.3f, 0.3f);
+	this->button_1->getTransformable()->setScale(1.2f, 1.2f);
 
 	this->button_1Text = new UIText("text_1");
 	this->button_1->attachChild(this->button_1Text);
-	this->button_1Text->setPosition(0, -20);
-	this->button_1Text->setSize(100);
+	this->button_1Text->setPosition(0, 0);
+	this->button_1Text->setSize(30);
 	this->button_1Text->setText("YES");
 	this->button_1->setButtonListener(this);
 
 	this->button_2 = new UIButton("No_btn", btnNormal, btnPressed);
 	this->attachChild(this->button_2);
 	this->button_2->setPosition(150, 150);
-	this->button_2->getTransformable()->setScale(0.3f, 0.3f);
+	this->button_2->getTransformable()->setScale(1.2f, 1.2f);
 
 	this->button_2Text = new UIText("text_2");
 	this->button_2->attachChild(this->button_2Text);
-	this->button_2Text->setPosition(0, -20);
-	this->button_2Text->setSize(100);
+	this->button_2Text->setPosition(0, 0);
+	this->button_2Text->setSize(30);
 	this->button_2Text->setText("NO");
 	this->button_2->setButtonListener(this);
 

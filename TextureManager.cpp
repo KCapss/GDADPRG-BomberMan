@@ -18,22 +18,16 @@ void TextureManager::loadAll()
 {
 	
 	//load obj
-	loadTexture("eagle", "Media/Eagle.png");
-	loadTexture("raptor", "Media/Raptor.png");
-	loadTexture("avenger", "Media/Avenger.png");
-	loadTexture("bullet", "Media/Bullet.png");
+	
 
 	//BG Divider
-	loadTexture("desert_bg", "Media/Texture/Desert.png");
-	sf::Texture* bgTex;
-	bgTex = getTexture("desert_bg");
-	bgTex->setRepeated(true);
+	
 
 	//load UI
-	loadTexture("ui_bg", "Media/f.png");
+	loadTexture("ui_bg", "Media/Assets/UI/green_panel.png");
 	loadTexture("ui_bar", "Media/bar_1.png");
-	loadTexture("btn_normal", "Media/b_4.png");
-	loadTexture("btn_pressed", "Media/b_5.png");
+	loadTexture("btn_normal", "Media/Assets/UI/offRed_button11.png");
+	loadTexture("btn_pressed", "Media/Assets/UI/onRed_button13.png");
 
 	//TitleScreen
 	loadTexture("title_bg", "Media/TitleScreenBG.png");

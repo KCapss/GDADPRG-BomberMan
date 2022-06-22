@@ -24,14 +24,19 @@ void PlayerInputController::perform()
 	switch (event.key.code) {
 	case sf::Keyboard::W:
 		this->moveUp = keyflag;
+		break;
 	case sf::Keyboard::S:
 		this->moveDown = keyflag;
+		break;
 	case sf::Keyboard::A:
 		this->moveLeft = keyflag;
+		break;
 	case sf::Keyboard::D:
 		this->moveRight = keyflag;
-	/*case sf::Keyboard::P:
-		ApplicationManager::getInstance()->pauseApplication();*/
+		break;
+	case sf::Keyboard::Space:
+		this->fire = keyflag;
+		break;
 	}
 }
 
@@ -53,6 +58,11 @@ bool PlayerInputController::isLeft()
 bool PlayerInputController::isRight()
 {
 	return this->moveRight;
+}
+
+bool PlayerInputController::hasFired()
+{
+	return this->fire;
 }
 
 

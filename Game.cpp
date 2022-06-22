@@ -8,10 +8,7 @@
 #include "Manager/FontManager.h"
 #include "Manager/ApplicationManager.h"
 
-#include "BGObject.h"
-#include "AirplanePlayer.h"
-#include "AirplaneSupport.h"
-#include "EnemyAirplane.h"
+
 
 #include "Screen/MainMenuScreen.h"
 #include "Screen/HUD.h"
@@ -21,8 +18,6 @@
 #include "Scene/TitleScene.h"
 #include "Scene/GameScene.h"
 
-
-#include "Component/EnemySwarmHandler.h"
 #include "Scene/SceneManager.h"
 
 Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Kevin Carl Capalar")
@@ -41,43 +36,6 @@ Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Ke
 	//load first scene
 	//SceneManager::getInstance()->loadScene(GAME_SCENE_NAME);
 	SceneManager::getInstance()->loadScene("TitleScene");
-
-	/*
-	BGObject* bgObject = new BGObject ("BGObject");
-	GameObjectManager::getInstance()->addObject(bgObject);
-
-	AirplanePlayer* planeObject = new AirplanePlayer("PlaneObject");
-	GameObjectManager::getInstance()->addObject(planeObject);
-
-	AirplaneSupport* support1 = new AirplaneSupport("AirSupport_1");
-	planeObject->attachChild(support1);
-	support1->setPosition(50, 100);
-
-	AirplaneSupport* support2 = new AirplaneSupport("AirSupport_2");
-	planeObject->attachChild(support2);
-	support2->setPosition(-50, 100);
-
-	HUD* hudMenu = new HUD("HUDMenu");
-	GameObjectManager::getInstance()->addObject(hudMenu);
-
-	MainMenuScreen* mainMenu = new MainMenuScreen("MainMenu");
-	GameObjectManager::getInstance()->addObject(mainMenu);
-
-	srand(time(NULL));
-	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
-	EnemySwarmHandler* swarmHandler = new EnemySwarmHandler(200, "SwarmHandler", enemiesManager);
-
-	enemiesManager->attachComponent(swarmHandler);
-	GameObjectManager::getInstance()->addObject(enemiesManager);
-	*/
-
-
-	/*TextureManager::getInstance()->loadAll();
-	createEntity("bed_", 0, 0);
-	createEntity("bench_", 150, 0);
-	createEntity("boxGift_", 300, 0);
-	createEntity("coin_", 450, 0);*/
-
 	
 	
 	
@@ -121,9 +79,6 @@ void Game::processEvent()
 			break;
 
 		default:
-			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
-				GameObjectManager::getInstance()->addObject(new EnemyAirplane("EnemyAirplane"));
-			}
 			GameObjectManager::getInstance()->processInput(event);
 			break;
 
@@ -187,14 +142,6 @@ void Game::render()
 
 
 
-void Game::genPath()
-{
-	this->path.push_back("Media/Texture/bed0000.png");
-	this->path.push_back("Media/Texture/bench0000.png");
-	this->path.push_back("Media/Texture/boxGift_0000.png");
-	this->path.push_back("Media/Texture/coin0000.png");
-
-}
 
 
 

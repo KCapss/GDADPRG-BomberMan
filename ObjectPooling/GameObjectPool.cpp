@@ -48,13 +48,13 @@ APoolable* GameObjectPool::requestPoolable()
 		this->availableObjects.erase(this->availableObjects.begin() + this->availableObjects.size() - 1);
 		this->usedObject.push_back(poolableObject);
 
-		std::cout << "Requested object. Available: " << this->availableObjects.size() << " Used: " << this->usedObject.size() << "\n";
+		//std::cout << "Requested object. Available: " << this->availableObjects.size() << " Used: " << this->usedObject.size() << "\n";
 		this->setEnabled(poolableObject, true);
 		return poolableObject;
 	}
 
 	else {
-		std::cout << " No more poolable " + this->objectCopy->getName() + " available! \n";
+		//std::cout << " No more poolable " + this->objectCopy->getName() + " available! \n";
 		checkFinishedObject();
 		return NULL;
 	}
@@ -78,9 +78,20 @@ ObjectList GameObjectPool::requestPoolableBatch(int size)
 
 void GameObjectPool::releasePoolable(APoolable* poolableObject)
 {
-	//poolableObject->setEnabled(false);
-	this->availableObjects.push_back(poolableObject);
-	this->usedObject.erase(this->usedObject.begin());
+	ObjectList::iterator it;
+
+	it = find(usedObject.begin(), usedObject.end(), poolableObject);
+	if (it != usedObject.end()) {
+
+		int index = std::distance(usedObject.begin(), it);
+		
+		this->setEnabled(poolableObject, false);
+		this->availableObjects.push_back(poolableObject);
+
+		this->usedObject.erase(this->usedObject.begin() + index);
+		this->usedObject.shrink_to_fit();
+	}
+	
 	
 }
 
@@ -88,7 +99,7 @@ void GameObjectPool::releasedPoolableBatch(ObjectList objectList)
 {
 	int releaseCount = objectList.size() - this->availableObjects.size();
 	for (int i = 0; i < releaseCount; i++) {
-		this->releasePoolable(*this->usedObject.begin());
+		this->releasePoolable(objectList[i]);
 	}
 }
 

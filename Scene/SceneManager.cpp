@@ -39,8 +39,9 @@ void SceneManager::checkLoadScene()
 void SceneManager::unloadScene()
 {
     if (this->activeScene != NULL) {
-        this->activeScene->onUnloadObjects();
         this->activeScene->onUnloadResources();
+        this->activeScene->onUnloadObjects();
+        
    }
 }
 

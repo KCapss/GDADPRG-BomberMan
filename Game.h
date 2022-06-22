@@ -12,8 +12,8 @@
 class Game
 {
 public:
-	static const int GAME_WINDOW_WIDTH = 1024;
-	static const int GAME_WINDOW_HEIGHT = 768;
+	static const int GAME_WINDOW_WIDTH = 1088;
+	static const int GAME_WINDOW_HEIGHT = 896;
 
 	Game();
 	void run();

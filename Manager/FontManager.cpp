@@ -14,7 +14,8 @@ FontManager* FontManager::getInstance()
 
 void FontManager::loadAll()
 {
-	loadFont("default", "Media/Sansation.ttf");
+	loadFont("default", "Media/Assets/Font/UI_Kenney-Future-Narrow.ttf");
+	loadFont("title", "Media/Assets/Font/Title_Kenney-Pixel-Square.ttf");
 }
 
 sf::Font* FontManager::getFont(std::string key)

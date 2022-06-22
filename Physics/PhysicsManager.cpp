@@ -71,10 +71,10 @@ void PhysicsManager::perform()
         }
     }
 
-    std::cout << "---" << endl;
+    //std::cout << "---" << endl;
     for (int i = 0; i < this->trackedObject.size(); i++) {
         
-        std::cout << this->trackedObject[i]->getOwner()->isEnabled() << endl;
+        //std::cout << this->trackedObject[i]->getOwner()->isEnabled() << endl;
         this->trackedObject[i]->setChecked(false);
     }
 
@@ -88,7 +88,4 @@ void PhysicsManager::cleanUpObjects()
     }
 
     this->forCleaningObjects.clear();
-    //Debub
-    /*"Size of tracked object"
-        "Size of Cleaning object"*/
 }

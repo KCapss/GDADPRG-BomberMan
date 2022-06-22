@@ -35,25 +35,25 @@ void TitleScreen::initialize()
 
 	this->playBtn = new UIButton("Play_btn", btnNormal, btnPressed);
 	this->attachChild(this->playBtn);
-	this->playBtn->setPosition(0, -50);
-	this->playBtn->getTransformable()->setScale(0.3f, 0.3f);
+	this->playBtn->setPosition(0, Game::GAME_WINDOW_WIDTH / 8);
+	this->playBtn->getTransformable()->setScale(1.6f, 1.6f);
 
 	this->playTxt = new UIText("text_1");
 	this->playBtn->attachChild(this->playTxt);
-	this->playTxt->setPosition(0, -20);
-	this->playTxt->setSize(100);
+	this->playTxt->setPosition(0, 0);
+	this->playTxt->setSize(30);
 	this->playTxt->setText("Play");
 	this->playBtn->setButtonListener(this);
 
 	this->quitBtn = new UIButton("quit_btn", btnNormal, btnPressed);
 	this->attachChild(this->quitBtn);
-	this->quitBtn->setPosition(0, 50);
-	this->quitBtn->getTransformable()->setScale(0.3f, 0.3f);
+	this->quitBtn->setPosition(0, Game::GAME_WINDOW_WIDTH / 4);
+	this->quitBtn->getTransformable()->setScale(1.6f, 1.6f);
 
 	this->quitTxt = new UIText("text_2");
 	this->quitBtn->attachChild(this->quitTxt);
-	this->quitTxt->setPosition(0, -20);
-	this->quitTxt->setSize(100);
+	this->quitTxt->setPosition(0, 0);
+	this->quitTxt->setSize(30);
 	this->quitTxt->setText("Quit");
 	this->quitBtn->setButtonListener(this);
 }

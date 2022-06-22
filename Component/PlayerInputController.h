@@ -12,6 +12,7 @@ public:
 	bool isDown();
 	bool isLeft();
 	bool isRight();
+	bool hasFired();
 
 
 
@@ -21,6 +22,7 @@ private:
 	bool moveDown = false;
 	bool moveLeft = false;
 	bool moveRight = false;
+	bool fire = false;
 
 };
 

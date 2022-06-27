@@ -8,7 +8,10 @@
 
 #include <iostream>
 
-Player::Player(std::string name): AGameObject(name)
+
+
+
+Player::Player(std::string name): AGameObject(name), CollisionListener()
 {
 }
 
@@ -22,6 +25,7 @@ void Player::initialize()
 	sf::Vector2u textureSize = sprite->getTexture()->getSize();
 	sprite->setOrigin(textureSize.x / 2, textureSize.y / 2);
 	this->transformable.setPosition(Game::GAME_WINDOW_WIDTH / 2, Game::GAME_WINDOW_HEIGHT / 2);
+	//this->transformable.setScale(sf::Vector2f(0.8f, 0.8f));
 
 	//Declared
 	Renderer* renderer = new Renderer("Player Sprite");
@@ -34,4 +38,50 @@ void Player::initialize()
 	PlayerMovement* movement = new PlayerMovement("MyMovement");
 	this->attachComponent(movement);
 
+	this->collider = new Collider("Player");
+	collider->setLocalBounds(sprite->getGlobalBounds());
+	collider->setCollisionListener(this);
+	this->attachComponent(collider);
+
+	PhysicsManager::getInstance()->trackObject(this->collider);
+	PathManager::getInstance()->trackObject(this->collider);
+
+}
+
+void Player::changeOrientation(PlayerFacing playerOrientation)
+{
+	this->playerOrientation = playerOrientation;
+}
+
+void Player::changeBlockStatus(bool flag)
+{
+	this->isBlocked = flag;
+	
+}
+
+PlayerFacing Player::retrieveOrientation()
+{
+	return this->playerOrientation;
+}
+
+bool Player::getBlockedStatus()
+{
+	return this->isBlocked;
+}
+
+float Player::retrieveSpeed()
+{
+	return SPEED_MULLTIPLIER;
+}
+
+void Player::onCollisionEnter(AGameObject* contact)
+{
+	if (contact->getName().find("Wall") != std::string::npos) {
+		this->isBlocked = true;
+		//cout << "Collision Detected" << endl;
+	}
+}
+
+void Player::onCollisionExit(AGameObject* gameObject)
+{
 }

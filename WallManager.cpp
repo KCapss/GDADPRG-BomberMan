@@ -41,22 +41,16 @@ void WallManager::initialize()
 		
 	}
 	
-	
-
 	this->attachChild(boundariesTop);
 	this->attachChild(boundariesLeft);
 	this->attachChild(boundariesRight);
 	this->attachChild(boundariesBottom);
 
-	
-	
-	
-
 }
 
 void WallManager::loadCenterWall()
 {
-	float x = (64.0f * 2.0f);
+	float x = (64.0f) + 32.0f;
 	float y = (64.0f * 2.f) + 32.0f;
 
 	float increment = 64.0f;

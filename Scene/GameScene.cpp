@@ -23,6 +23,7 @@
 
 #include "../EmptyGameObject.h"
 #include "../Physics/PhysicsManager.h"
+#include "../Physics/PathManager.h"
 #include "../GameObjectManager.h"
 
 
@@ -41,30 +42,25 @@ void GameScene::onLoadResources()
 
 void GameScene::onLoadObjects()
 {
+	//Physics
 	EmptyGameObject* physicsManager = new EmptyGameObject("PhysicsManager");
 	this->registerObject(physicsManager);
 	PhysicsManager::initialize("PhysicsManager", physicsManager);
+
+	//Path
+	EmptyGameObject* pathManager = new EmptyGameObject("PathManager");
+	this->registerObject(pathManager);
+	PathManager::initialize("PathManager", pathManager);
+
+
 
 	WallManager* walldesign = new WallManager("WallManage");
 	GameObjectManager::getInstance()->addObject(walldesign);
 
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);
-
+	player->setPosition((64.0f) + 32.0f, (64.0f * 2.f) + 32.0f);
 	
-
-			
-	/*Wall* Tboundaries = new Wall("Wall", Top);
-	GameObjectManager::getInstance()->addObject(Tboundaries);
-
-	Wall* Lboundaries = new Wall("Wall", Left);
-	GameObjectManager::getInstance()->addObject(Lboundaries);
-
-	Wall* Rboundaries = new Wall("Wall", Right);
-	GameObjectManager::getInstance()->addObject(Rboundaries);
-
-	Wall* Bboundaries = new Wall("Wall", Bottom);
-	GameObjectManager::getInstance()->addObject(Bboundaries);*/
 
 	
 

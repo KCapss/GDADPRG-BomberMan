@@ -18,10 +18,15 @@ void TextureManager::loadAll()
 {
 	
 	//load obj
-	
+	loadTexture("bomberMan", "Media/Down_00.png");
 
 	//BG Divider
-	
+	loadTexture("wall", "Media/Assets/Objects/NonMovable/metalWall.png");
+	sf::Texture* bgWall = getTexture("wall");
+	bgWall->setRepeated(true);
+	loadTexture("ground", "Media/Assets/Objects/NonMovable/default_ground_06.png");
+	sf::Texture* bgGround = getTexture("ground");
+	bgGround->setRepeated(true);
 
 	//load UI
 	loadTexture("ui_bg", "Media/Assets/UI/green_panel.png");

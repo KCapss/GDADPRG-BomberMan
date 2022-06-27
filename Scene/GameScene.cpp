@@ -7,6 +7,9 @@
 //#include "../AirplaneSupport.h"
 //#include "../ProjectileObject.h"
 
+#include "../Player.h"
+#include "../WallManager.h"
+
 //All UI
 #include "../Screen/HUD.h"
 #include "../Screen/MainMenuScreen.h"
@@ -42,6 +45,28 @@ void GameScene::onLoadObjects()
 	this->registerObject(physicsManager);
 	PhysicsManager::initialize("PhysicsManager", physicsManager);
 
+	WallManager* walldesign = new WallManager("WallManage");
+	GameObjectManager::getInstance()->addObject(walldesign);
+
+	Player* player = new Player("Player");
+	GameObjectManager::getInstance()->addObject(player);
+
+	
+
+			
+	/*Wall* Tboundaries = new Wall("Wall", Top);
+	GameObjectManager::getInstance()->addObject(Tboundaries);
+
+	Wall* Lboundaries = new Wall("Wall", Left);
+	GameObjectManager::getInstance()->addObject(Lboundaries);
+
+	Wall* Rboundaries = new Wall("Wall", Right);
+	GameObjectManager::getInstance()->addObject(Rboundaries);
+
+	Wall* Bboundaries = new Wall("Wall", Bottom);
+	GameObjectManager::getInstance()->addObject(Bboundaries);*/
+
+	
 
 	srand(time(NULL));
 	HUD* hudMenu = new HUD("HUDMenu");

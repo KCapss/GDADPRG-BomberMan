@@ -44,9 +44,6 @@ void MainMenuScreen::initialize()
 	this->mainTextL2->setSize(50);
 	this->mainTextL2->setText("to quit the game?");
 
-
-
-
 	//Button Rendering
 	sf::Texture* btnNormal = TextureManager::getInstance()->getTexture("btn_normal");
 	sf::Texture* btnPressed = TextureManager::getInstance()->getTexture("btn_pressed");

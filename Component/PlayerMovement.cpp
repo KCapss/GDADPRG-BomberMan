@@ -42,17 +42,17 @@ void PlayerMovement::perform()
 			playerTransformable->move(offset * deltaTime.asSeconds());
 			player->changeOrientation(PlayerFacing::playerUp);
 		}
-		else if (inputController->isDown()) {
+		if (inputController->isDown()) {
 			offset.y += this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
 			player->changeOrientation(PlayerFacing::playerDown);
 		}
-		else if (inputController->isLeft()) {
+		if (inputController->isLeft()) {
 			offset.x -= this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
 			player->changeOrientation(PlayerFacing::playerLeft);
 		}
-		else if (inputController->isRight()) {
+		if (inputController->isRight()) {
 			offset.x += this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
 			player->changeOrientation(PlayerFacing::playerRight);
@@ -87,17 +87,17 @@ void PlayerMovement::adjustPos(Player* player)
 		playerTransformable->setPosition(sf::Vector2f(xPos, yPos + (offset.y * deltaTime.asSeconds())));
 	}
 
-	else if (player->retrieveOrientation() == PlayerFacing::playerDown) {
+	if (player->retrieveOrientation() == PlayerFacing::playerDown) {
 		offset.y -= this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos, yPos + (offset.y * deltaTime.asSeconds())));
 	}
 
-	else if (player->retrieveOrientation() == PlayerFacing::playerLeft) {
+	if (player->retrieveOrientation() == PlayerFacing::playerLeft) {
 		offset.x += this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos + (offset.x * deltaTime.asSeconds()), yPos ));
 	}
 
-	else if (player->retrieveOrientation() == PlayerFacing::playerRight) {
+	if (player->retrieveOrientation() == PlayerFacing::playerRight) {
 		offset.x -= this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos + (offset.x * deltaTime.asSeconds()), yPos));
 	}
@@ -122,38 +122,35 @@ bool PlayerMovement::checkOutofBounds(Player* player, PlayerInputController *inp
 		if (yPos + offset.y < TBound) {
 			return false;
 		}
-		else
-			return true;
+		
 
 	}
-	else if (inputController->isDown()) {
+	if (inputController->isDown()) {
 		offset.y += this->SPEED_MULLTIPLIER * deltaTime.asSeconds();
 		if (yPos + offset.y > BBound) {
 			return false;
 		}
-		else
-			return true;
+		
 		
 	}
-	else if (inputController->isLeft()) {
+	if (inputController->isLeft()) {
 		offset.x -= this->SPEED_MULLTIPLIER * deltaTime.asSeconds();
 		if (xPos + offset.x < LBound) {
 			return false;
 		}
-		else
-			return true;
+		
 		
 	}
-	else if (inputController->isRight()) {
+	if (inputController->isRight()) {
 		offset.x += this->SPEED_MULLTIPLIER * deltaTime.asSeconds();
 		if (xPos + offset.x > RBound) {
 			return false;
 		}
-		else
-			return true;
+		
 	}
 
-	return false;
+	else
+		return true;
 }
 
 bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputController)
@@ -163,7 +160,7 @@ bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputCont
 
 	if (inputController->isUp()) {
 		orientation = PlayerFacing::playerUp;
-		cout << "Up" << endl;
+		//cout << "Up" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
 			orientation)) {
 			return true;
@@ -171,9 +168,9 @@ bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputCont
 
 		else return false;
 	}
-	else if (inputController->isDown()) {
+	if (inputController->isDown()) {
 		orientation = PlayerFacing::playerDown;
-		cout << "Down" << endl;
+		//cout << "Down" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
 			orientation)) {
 			return true;
@@ -182,9 +179,9 @@ bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputCont
 		else return false;
 
 	}
-	else if (inputController->isLeft()) {
+	if (inputController->isLeft()) {
 		orientation = PlayerFacing::playerLeft;
-		cout << "Left" << endl;
+		//cout << "Left" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
 			orientation)) {
 			return true;
@@ -193,9 +190,9 @@ bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputCont
 		else return false;
 
 	}
-	else if (inputController->isRight()) {
+	if (inputController->isRight()) {
 		orientation = PlayerFacing::playerRight;
-		cout << "Right" << endl;
+		//cout << "Right" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
 			orientation)) {
 			return true;

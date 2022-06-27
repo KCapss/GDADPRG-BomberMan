@@ -25,7 +25,7 @@ void Player::initialize()
 	sf::Vector2u textureSize = sprite->getTexture()->getSize();
 	sprite->setOrigin(textureSize.x / 2, textureSize.y / 2);
 	this->transformable.setPosition(Game::GAME_WINDOW_WIDTH / 2, Game::GAME_WINDOW_HEIGHT / 2);
-	//this->transformable.setScale(sf::Vector2f(0.8f, 0.8f));
+	this->transformable.setScale(sf::Vector2f(0.9f, 0.83f));
 
 	//Declared
 	Renderer* renderer = new Renderer("Player Sprite");

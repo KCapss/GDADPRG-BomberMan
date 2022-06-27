@@ -145,18 +145,20 @@ bool PathManager::predictMovement(Collider* collider, int direction)
             bounds.width,
             bounds.height);
     }
-    bounds = sf::FloatRect(bounds.left + 8.0f,
-        bounds.top + 8.0f,
+    bounds = sf::FloatRect(bounds.left ,
+        bounds.top,
         bounds.width - 8.0f,
         bounds.height - 8.0f);
 
     for (int i = 0; i < this->wallTrackObject.size(); i++) {
         sf::FloatRect wallBounds = wallTrackObject[i]->getGlobalBounds();
 
-        wallBounds = sf::FloatRect(wallBounds.left + 8.0f,
-            wallBounds.top + 8.0f,
-            wallBounds.width - 8.0f,
-            wallBounds.height - 8.0f);
+        wallBounds = sf::FloatRect(wallBounds.left,
+            wallBounds.top ,
+            wallBounds.width - 4.0f,
+            wallBounds.height - 4.0f);
+
+
         /*cout << "x: " << wallBounds.left
             << " y: " << wallBounds.top << endl;*/
         if (bounds.intersects(wallBounds)) {

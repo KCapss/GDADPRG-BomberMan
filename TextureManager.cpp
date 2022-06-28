@@ -20,6 +20,7 @@ void TextureManager::loadAll()
 	//load obj
 	loadTexture("bomberMan", "Media/Down_00.png");
 	loadTexture("defaultCrate", "Media/Assets/Objects/NonMovable/default_Crate.png");
+	loadTexture("bombCrate", "Media/Assets/Objects/NonMovable/wall1_crate_08.png");
 
 	//BG Divider
 	loadTexture("wall", "Media/Assets/Objects/NonMovable/metalWall.png");

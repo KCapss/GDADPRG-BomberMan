@@ -21,7 +21,7 @@ private:
 	const float BULLET_SPAWN_INTERVAL = 0.2f;
 	float ticks = 0.0f;
 
-	GameObjectPool* projectilePool;
+	GameObjectPool* bombPool;
 
 
 };

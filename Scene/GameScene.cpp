@@ -9,6 +9,7 @@
 
 #include "../Player.h"
 #include "../WallManager.h"
+#include "../BombObject.h"
 
 //All UI
 #include "../Screen/HUD.h"
@@ -64,12 +65,24 @@ void GameScene::onLoadObjects()
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
 
+	EmptyGameObject* bombSpawner = new EmptyGameObject("BombSpawner");
+	GameObjectManager::getInstance()->addObject(bombSpawner);
+
+	this->bombPool = new GameObjectPool
+	(ObjectPoolHolder::PROJECT_POOL_TAG,
+		new BombObject("projectile"),
+		1,
+		bombSpawner);
+
+	this->bombPool->initialize();
+	ObjectPoolHolder::getInstance()->registerObjectPool(bombPool);
 
 
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);
 	player->setPosition((64.0f) + 32.0f, (64.0f * 2.f) + 32.0f);
 	
+
 
 	
 

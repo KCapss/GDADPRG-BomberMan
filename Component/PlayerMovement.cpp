@@ -30,6 +30,7 @@ void PlayerMovement::perform()
 	sf::Vector2f offset(0.0f, 0.0f);
 
 	//PathManager::getInstance()->operate();
+	this->ticks += deltaTime.asSeconds(); //preven spamming
 
 	if (this->checkOutofBounds(player, inputController) && 
 		!player->getBlockedStatus() &&
@@ -57,11 +58,22 @@ void PlayerMovement::perform()
 			playerTransformable->move(offset * deltaTime.asSeconds());
 			player->changeOrientation(PlayerFacing::playerRight);
 		}
+
+		
+		
+
 	}
 
-	else if (this->checkOutofBounds(player, inputController) && player->getBlockedStatus()) {
-		adjustPos(player);
+	if (inputController->hasFired()) {
+
+		this->bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
+		this->ticks = 0.0f;
+		this->bombPool->requestPoolable();
 	}
+
+	/*else if (this->checkOutofBounds(player, inputController) && player->getBlockedStatus()) {
+		adjustPos(player);
+	}*/
 
 
 	//this->ticks += deltaTime.asSeconds(); //preven spamming

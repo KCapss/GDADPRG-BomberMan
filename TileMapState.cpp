@@ -74,6 +74,34 @@ sf::Vector2f TileMapState::randomizeSpawn(string name)
 	return randomizeSpawn(name);
 }
 
+sf::Vector2f TileMapState::findNearestNeighbor(sf::Vector2f pos)
+{
+	float lowestDist = this->computeEuclideanDistance(pos, this->mapEnvinronment[0][0]);
+	sf::Vector2f tempPos = this->mapEnvinronment[0][0];
+
+
+	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
+		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
+
+			float currDistance = this->computeEuclideanDistance(pos, this->mapEnvinronment[i][j]);
+			if (lowestDist > currDistance) {
+				cout << "distance: " << currDistance << endl;
+				lowestDist = currDistance;
+				tempPos = this->mapEnvinronment[i][j];
+
+
+				//For Guarantee estimate
+				if (lowestDist < 30.0f)
+					return tempPos;
+			}
+			
+		}
+	}
+	
+	
+	return tempPos;
+}
+
 void TileMapState::registerPosition(sf::Vector2f Pos, std::string name)
 {
 	string key = this->convertString(Pos);
@@ -95,6 +123,21 @@ void TileMapState::registerPosition(sf::Vector2f Pos, std::string name)
 		
 	}
 
+}
+
+float TileMapState::computeEuclideanDistance(sf::Vector2f A, sf::Vector2f B)
+{
+	//For X
+	float Ax = A.x;
+	float Bx = B.x;
+
+	//For Y
+	float Ay = A.y;
+	float By = B.y;
+
+	float difference = (abs(Ax - Bx) + abs(Ay - By));
+
+	return difference;
 }
 
 bool TileMapState::checkOccupancy(sf::Vector2f Pos)

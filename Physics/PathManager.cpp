@@ -159,15 +159,29 @@ bool PathManager::predictMovement(Collider* collider, int direction)
             wallBounds.height - 4.0f);
 
 
-        /*cout << "x: " << wallBounds.left
-            << " y: " << wallBounds.top << endl;*/
-        if (bounds.intersects(wallBounds)) {
-            /*cout << "collide" << endl;
-            cout << "x: " << wallBounds.left
-                << " y: " << wallBounds.top << endl;*/
-         
+        //for bomb
+        if (wallTrackObject[i]->getName() == "BombCollider") {
+            if (bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
+                return true;
+
+            else if(!bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
+            {
+                wallTrackObject[i]->setAlreadyCollided(false);
+                return true;
+            }
+
+            else if (!bounds.intersects(wallBounds) && !wallTrackObject[i]->alreadyCollided())
+            {
+                return true;
+            }
+
             return false;
-       }
+        }
+
+        
+        if (bounds.intersects(wallBounds)) {
+            return false;
+        }
     }
 
     /*cout << "x: " << bounds.left

@@ -22,12 +22,15 @@ public:
 	//Summon Randomizer
 	sf::Vector2f randomizeSpawn(string name);
 	
+	//
+	sf::Vector2f findNearestNeighbor(sf::Vector2f pos);
 
 
 private:
 	//set constructor to private
 	TileMapState() {};
 	
+	float computeEuclideanDistance(sf::Vector2f A, sf::Vector2f B);
 	
 	bool checkOccupancy(sf::Vector2f Pos);
 	

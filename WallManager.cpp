@@ -1,5 +1,6 @@
 #include "WallManager.h"
 #include "GameObjectManager.h"
+#include "TileMapState.h"
 
 #include <iostream>
 using namespace std;
@@ -29,6 +30,7 @@ void WallManager::initialize()
 		
 		Wall* pillar = new Wall("Wall", Center);
 		pillar->initialPos(nonWalkableSpot[x][y]);
+		TileMapState::getInstance()->registerPosition(nonWalkableSpot[x][y], "Wall");
 		this->attachChild(pillar);
 		y++;
 
@@ -63,8 +65,8 @@ void WallManager::loadCenterWall()
 			
 			if ((i % 2) == 1) {
 				if ((j % 2) == 1) {
-					cout << "column: " << i <<
-						" row: " << j << endl;
+					/*cout << "column: " << i <<
+						" row: " << j << endl;*/
 					sf::Vector2f wallPos = sf::Vector2f((x)+(64.0f * i), (y)+(64.0f * j));
 					columnList.push_back(wallPos);
 				}

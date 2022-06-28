@@ -15,6 +15,8 @@
 #include "../Screen/MainMenuScreen.h"
 
 //AllComponent
+#include "../Component/BoxSpawner.h"
+
 
 //AllPool
 #include "../ObjectPooling/ObjectPoolHolder.h"
@@ -52,10 +54,17 @@ void GameScene::onLoadObjects()
 	this->registerObject(pathManager);
 	PathManager::initialize("PathManager", pathManager);
 
-
-
+	srand(time(NULL));
 	WallManager* walldesign = new WallManager("WallManage");
 	GameObjectManager::getInstance()->addObject(walldesign);
+
+	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
+	BoxSpawner* boxSpawner = new BoxSpawner(55, "SwarmHandler", boxManager);
+
+	boxManager->attachComponent(boxSpawner);
+	GameObjectManager::getInstance()->addObject(boxManager);
+
+
 
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);

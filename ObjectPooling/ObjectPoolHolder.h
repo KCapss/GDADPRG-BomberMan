@@ -12,6 +12,7 @@ public:
 	//pool names
 	static string ENEMY_POOL_TAG;
 	static string PROJECT_POOL_TAG;
+	static string BOX_POOL_TAG;
 
 	static ObjectPoolHolder* getInstance();
 

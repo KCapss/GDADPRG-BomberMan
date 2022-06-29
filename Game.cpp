@@ -7,7 +7,8 @@
 #include "TextureManager.h"
 #include "Manager/FontManager.h"
 #include "Manager/ApplicationManager.h"
-
+#include "TileMapState.h"
+#include "PlayerState.h"
 
 
 #include "Screen/MainMenuScreen.h"
@@ -27,6 +28,8 @@ Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Ke
 	TextureManager::getInstance()->loadAll();
 	FontManager::getInstance()->loadAll();
 	ApplicationManager::getInstance()->initialize(&mWindow);
+	TileMapState::getInstance()->loadAll();
+	PlayerState::getInstance()->initialize();
 
 	//register scene
 	SceneManager::getInstance()->registerScene(new TitleScene());
@@ -35,7 +38,7 @@ Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Ke
 
 	//load first scene
 	//SceneManager::getInstance()->loadScene(GAME_SCENE_NAME);
-	SceneManager::getInstance()->loadScene("TitleScene");
+	SceneManager::getInstance()->loadScene("GameScene");
 	
 	
 	

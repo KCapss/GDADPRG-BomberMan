@@ -3,7 +3,7 @@
 #include "../AGameObject.h"
 #include "Collider.h"
 
-#include "../Player.h"
+
 
 
 
@@ -39,8 +39,14 @@ public:
     void perform() {};
     void operate();
 
+    //For Player
     bool predictMovement(Collider *collider, int direction);
     bool collidedPath(sf::FloatRect A, sf::FloatRect B);
+
+    //For Enemies
+
+    //For Bomb
+    void checkIntersection(Collider* collider, sf::FloatRect bounds);
 
 
     //Special Case

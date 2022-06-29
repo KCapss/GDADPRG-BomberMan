@@ -87,7 +87,7 @@ void GameScene::onLoadObjects()
 	this->bombVFXPool = new GameObjectPool
 	(ObjectPoolHolder::VFX_POOL_TAG,
 		new BombVFX("VFX"),
-		10,
+		30,
 		VFXBombSpawner);
 
 	this->bombVFXPool->initialize();

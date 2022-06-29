@@ -13,7 +13,7 @@ PlayerState* PlayerState::getInstance()
 
 void PlayerState::initialize()
 {
-
+	this->maxRange = 2;
 }
 
 int PlayerState::retrieveMaxRange()

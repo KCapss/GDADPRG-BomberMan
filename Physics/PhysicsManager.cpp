@@ -83,9 +83,37 @@ void PhysicsManager::perform()
 
 void PhysicsManager::cleanUpObjects()
 {
-    for (int i = 0; i < this->forCleaningObjects.size(); i++) {
+    /*for (int i = 0; i < this->forCleaningObjects.size(); i++) {
         this->trackedObject.erase(this->trackedObject.begin() + i);
     }
 
-    this->forCleaningObjects.clear();
+    this->forCleaningObjects.clear();*/
+
+    CollisionList::iterator itr = trackedObject.begin();
+
+    int index;
+    for (int i = 0; i < this->forCleaningObjects.size(); i++){
+        itr = trackedObject.begin();
+
+        int j = 0;
+        while (itr != trackedObject.end()) {
+
+            if (trackedObject[j] == forCleaningObjects[i]) {
+               /* cout << "Found " << j << endl;*/
+                index = j;
+                break;
+
+            }
+
+            itr++;
+            j++;
+        }
+
+        this->trackedObject.erase(this->trackedObject.begin() + index);
+        this->trackedObject.shrink_to_fit();
+
+    }
+
+    if(forCleaningObjects.size() > 0)
+        this->forCleaningObjects.clear();
 }

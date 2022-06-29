@@ -28,7 +28,7 @@ void BoxObject::initialize()
 
 	
 
-	Renderer* renderer = new Renderer("EnemySprite");
+	Renderer* renderer = new Renderer("BoxSprite");
 	renderer->assignDrawable(sprite);
 	//renderer->assignDrawable(sprite);
 
@@ -44,6 +44,7 @@ void BoxObject::initialize()
 
 void BoxObject::onRelease()
 {
+	//PhysicsManager::getInstance()->untrackObject(this->collider);
 }
 
 void BoxObject::onActivate()
@@ -73,8 +74,19 @@ APoolable* BoxObject::clone()
 
 void BoxObject::onCollisionEnter(AGameObject* contact)
 {
+	//Whenever the bomb collided with other objects
+	
 }
 
 void BoxObject::onCollisionExit(AGameObject* gameObject)
 {
+	//Activate the collider for the physics
+	PathManager::getInstance()->untrackWallObject(this->collider);
+	TileMapState::getInstance()->unRegisterPosition(this->getTransformable()->getPosition());
+
+
+	GameObjectPool* boxPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::BOX_POOL_TAG);
+	boxPool->releasePoolable((APoolable*)this);
+	//PhysicsManager::getInstance()->trackObject(this->collider);
+
 }

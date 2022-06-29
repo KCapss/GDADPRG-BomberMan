@@ -212,8 +212,14 @@ void TileMapState::registerExplosion(sf::Vector2f Pos, int direction, int count)
 			string key = this->convertString(Pos);
 			this->mapLayout[key]->activateExplosion();
 
-			if (PlayerState::getInstance()->retrieveMaxRange() - 1 > count) {
-				this->registerExplosion(Pos, direction, count);
+			/*cout << "Name : " << this->mapLayout[key]->getName() << endl;*/
+
+			if (this->mapLayout[key]->getName() == "Box") {
+
+			}
+
+			else if (PlayerState::getInstance()->retrieveMaxRange() - 1 > count) {
+				this->registerExplosion(Pos, direction, count + 1);
 			}
 		}
 

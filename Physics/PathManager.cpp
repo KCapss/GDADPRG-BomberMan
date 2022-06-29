@@ -1,4 +1,6 @@
 #include "PathManager.h"
+#include "../Player.h"
+#include "../BombVFX.h"
 #include <iostream>
 #include <cmath>
 
@@ -219,6 +221,37 @@ bool PathManager::collidedPath(sf::FloatRect A, sf::FloatRect B)
     return false;
 }
 
+void PathManager::checkIntersection(Collider* collider, sf::FloatRect bounds)
+{
+
+    BombVFX* bombVFX = (BombVFX*)collider->getOwner();
+
+
+    for (int i = 0; i < this->wallTrackObject.size(); i++) {
+        sf::FloatRect wallBounds = wallTrackObject[i]->getGlobalBounds();
+
+       /* wallBounds = sf::FloatRect(wallBounds.left,
+            wallBounds.top + 32.0f,
+            wallBounds.width - 32.0f,
+            wallBounds.height  - 32.0f);*/
+
+        wallBounds = sf::FloatRect(wallBounds.left,
+            wallBounds.top + 32.0f,
+            wallBounds.width,
+            wallBounds.height);
+
+       // cout << "Name: " << wallTrackObject[i]->getName() << endl;
+        if (wallTrackObject[i]->getName() == "Box") {
+
+            if (bounds.intersects(wallBounds)) {
+                wallTrackObject[i]->collisionExit(collider->getOwner());
+                //break;
+            }
+            
+        }
+    }
+}
+
 void PathManager::cleanUpObjects(CleaningTypes types)
 {
 
@@ -239,7 +272,7 @@ void PathManager::cleanUpObjects(CleaningTypes types)
             while (itr != wallTrackObject.end()) {
                 
                 if (wallTrackObject[j] == forCleaningWalls[i]) {
-                    cout << "Found " << j << endl;
+                   /* cout << "Found " << j << endl;*/
                     index = j;
                     break;
                     
@@ -251,13 +284,7 @@ void PathManager::cleanUpObjects(CleaningTypes types)
 
             this->wallTrackObject.erase(this->wallTrackObject.begin() + index);
             this->wallTrackObject.shrink_to_fit();
-            /*if (it != wallTrackObject.end()) {
-
-                int index = std::distance(wallTrackObject.begin(), it);
-
-                this->wallTrackObject.erase(this->wallTrackObject.begin() + index);
-                this->wallTrackObject.shrink_to_fit();
-            }*/
+        
         }
 
         this->forCleaningWalls.clear();

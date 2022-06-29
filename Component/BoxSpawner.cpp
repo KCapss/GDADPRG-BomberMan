@@ -11,6 +11,8 @@ BoxSpawner::BoxSpawner(int numEnemies, string name, AGameObject* parent) : AComp
 		parent);
 	this->boxPool->initialize();
 	ObjectPoolHolder::getInstance()->registerObjectPool(this->boxPool);
+
+	this->boxCount = numEnemies;
 }
 
 BoxSpawner::~BoxSpawner()
@@ -19,6 +21,11 @@ BoxSpawner::~BoxSpawner()
 
 void BoxSpawner::perform()
 {
-	GameObjectPool* boxPoolHandler = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::BOX_POOL_TAG);
-	boxPoolHandler->requestPoolable();
+	if (boxCount > currCount) {
+		GameObjectPool* boxPoolHandler = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::BOX_POOL_TAG);
+		boxPoolHandler->requestPoolable();
+
+		currCount++;
+	}
+	
 }

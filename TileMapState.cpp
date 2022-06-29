@@ -1,4 +1,5 @@
 #include "TileMapState.h"
+#include "PlayerState.h"
 
 
 TileMapState* TileMapState::sharedInstance = NULL;
@@ -25,7 +26,10 @@ void TileMapState::loadAll()
 
 			sf::Vector2f tileSpot = sf::Vector2f((x)+(64.0f * i), (y)+(64.0f * j));
 			if ((i == 0 && j == 0) || (i == 1 && j == 0) || (i == 0 && j == 1)) {
-
+				//Debugging
+				string key = this->convertString(tileSpot);
+				//cout << key << endl;
+				this->mapLayout[key] = new TileState();
 			}
 			else {
 				string key = this->convertString(tileSpot);
@@ -60,7 +64,13 @@ sf::Vector2f TileMapState::randomizeSpawn(string name)
 			int randNum = rand() % 200;
 			if (randNum < 1) {
 				if (this->checkOccupancy(this->mapEnvinronment[i][j])) {
-					return this->mapEnvinronment[i][j];
+
+					if ((i == 0 && j == 0) || (i == 1 && j == 0) || (i == 0 && j == 1))
+					{
+
+					}
+					else
+						return this->mapEnvinronment[i][j];
 				}
 				else {
 					/*cout << "occupied X: " <<
@@ -125,6 +135,19 @@ void TileMapState::registerPosition(sf::Vector2f Pos, std::string name)
 
 }
 
+void TileMapState::unRegisterPosition(sf::Vector2f Pos)
+{
+	string key = this->convertString(Pos);
+	if (this->mapLayout[key] == NULL) {
+		std::cout << "This Pos is not Registered" << std::endl;
+
+	}
+
+	else {
+		this->mapLayout[key]->reset();
+	}
+}
+
 float TileMapState::computeEuclideanDistance(sf::Vector2f A, sf::Vector2f B)
 {
 	//For X
@@ -144,12 +167,129 @@ bool TileMapState::checkOccupancy(sf::Vector2f Pos)
 {
 	string key = this->convertString(Pos);
 	if (this->mapLayout[key] == NULL) {
-		std::cout << "This Pos is not Registered" << std::endl;
+		std::cout << "This Pos is not missing" << std::endl;
 		return false;
 	}
 
 	
 	return this->mapLayout[key]->isOccupied();
+}
+
+void TileMapState::registerExplosion(sf::Vector2f Pos, int direction, int count)
+{
+	//Special Case
+	if (direction == PlayerFacing::playerCenter)
+	{
+		if (validTile(Pos) && !checkhasExploded(Pos)) {
+			string key = this->convertString(Pos);
+			this->mapLayout[key]->activateExplosion();
+		}
+	}
+
+	//Cardinal Direction
+	else {
+		if (direction == PlayerFacing::playerUp)
+		{
+			Pos = sf::Vector2f(Pos.x, Pos.y - 64.0f);
+		}
+
+		else if (direction == PlayerFacing::playerDown)
+		{
+			Pos = sf::Vector2f(Pos.x, Pos.y + 64.0f);
+		}
+
+		else if (direction == PlayerFacing::playerLeft)
+		{
+			Pos = sf::Vector2f(Pos.x - 64.0f, Pos.y);
+		}
+
+		else if (direction == PlayerFacing::playerRight)
+		{
+			Pos = sf::Vector2f(Pos.x + 64.0f, Pos.y);
+		}
+
+		if (validTile(Pos) && !checkhasExploded(Pos)) {
+			string key = this->convertString(Pos);
+			this->mapLayout[key]->activateExplosion();
+
+			if (PlayerState::getInstance()->retrieveMaxRange() - 1 > count) {
+				this->registerExplosion(Pos, direction, count);
+			}
+		}
+
+	}
+	
+
+}
+
+void TileMapState::unregisterExplosion(sf::Vector2f Pos)
+{
+	string key = this->convertString(Pos);
+	this->mapLayout[key]->resetExplosion();
+}
+
+bool TileMapState::checkhasExploded(sf::Vector2f Pos)
+{
+	string key = this->convertString(Pos);
+	if (this->mapLayout[key] == NULL) {
+		std::cout << "This Pos is not missing for explosion" << std::endl;
+		return false;
+	}
+
+	return this->mapLayout[key]->hasinitiateExplosion();
+}
+
+bool TileMapState::validTile(sf::Vector2f Pos)
+{
+	string key = this->convertString(Pos);
+	if (this->mapLayout[key] == NULL) {
+		std::cout << "This Pos dows not exist" << std::endl;
+		return false;
+	}
+	/*std::cout << "This Pos is not missing for name: " << 
+		this->mapLayout[key]->getName() << std::endl;*/
+
+	if (this->mapLayout[key]->getName() == "Wall")
+		return false;
+	else
+		return true;
+}
+
+sf::Vector2f TileMapState::onInitiateExplotion()
+{
+	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
+		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
+			string key = this->convertString(this->mapEnvinronment[i][j]);
+
+			if (this->mapLayout[key]->hasinitiateExplosion() &&
+				!this->mapLayout[key]->hasExploded()) {
+				this->mapLayout[key]->explosionSetActive();
+				return this->mapEnvinronment[i][j];
+			}
+			
+		}
+	}
+
+	cout << "Too many explotion " << endl;
+
+}
+
+int TileMapState::availableExplotion()
+{
+	int count = 0;
+	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
+		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
+			string key = this->convertString(this->mapEnvinronment[i][j]);
+
+			if (this->mapLayout[key]->hasinitiateExplosion() &&
+				!this->mapLayout[key]->hasExploded()) {
+				count++;
+			}
+
+		}
+	}
+
+	return count;
 }
 
 

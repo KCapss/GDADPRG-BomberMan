@@ -1,29 +1,31 @@
 #pragma once
 #include "ObjectPooling/APoolable.h"
 #include "AGameObject.h"
-#include "Component/BombBehaviour.h"
 #include "Physics/PhysicsManager.h"
-class BombObject :
-    public APoolable, CollisionListener
+
+class BombVFX :
+    public APoolable, public CollisionListener
 {
 public:
-    BombObject(string name);
-    ~BombObject();
+    BombVFX(string name);
+    ~BombVFX();
 
     void initialize();
     void onRelease();
     void onActivate();
     APoolable* clone();
 
+    void update(sf::Time deltaTime);
+
     void onCollisionEnter(AGameObject* contatct);
     void onCollisionExit(AGameObject* contact);
 private:
+    const float BOMB_DURATION = 0.2f;
 
-    BombBehaviour* bombBehaviour = NULL;
     Collider* collider = NULL;
-    Collider* movementCollider = NULL;
-    bool hasHit = false;
+    sf::Vector2f tempPos = sf::Vector2f(0, 0);
+    float ticks = 0;
 
-    sf::Vector2f tempPosition = sf::Vector2f (0, 0);
+    
 };
 

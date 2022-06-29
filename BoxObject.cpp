@@ -30,6 +30,8 @@ void BoxObject::initialize()
 
 	Renderer* renderer = new Renderer("EnemySprite");
 	renderer->assignDrawable(sprite);
+	//renderer->assignDrawable(sprite);
+
 	this->attachComponent(renderer);
 
 

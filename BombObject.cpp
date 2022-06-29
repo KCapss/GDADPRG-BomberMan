@@ -63,6 +63,7 @@ void BombObject::initialize()
 void BombObject::onRelease()
 {
     PathManager::getInstance()->untrackWallObject(this->collider);
+    TileMapState::getInstance()->unRegisterPosition(tempPosition);
 }
 
 void BombObject::onActivate()
@@ -71,14 +72,17 @@ void BombObject::onActivate()
     sf::Vector2f position = player->getTransformable()->getPosition();
 
     position = TileMapState::getInstance()->findNearestNeighbor(position);
-
     this->setPosition(position.x, position.y);
-   
     this->hasHit = false;
 
+    //Create the placeholder the position:
+    this->tempPosition = position;
+
     PathManager::getInstance()->trackWallObject(this->collider);
-    this->collider->setAlreadyCollided(true);
-    //PhysicsManager::getInstance()->trackObject(this->collider);
+    TileMapState::getInstance()->registerPosition(position, this->name);
+    
+    this->collider->setAlreadyCollided(true); //Assume the bomb is under the player
+    
 }
 
 APoolable* BombObject::clone()

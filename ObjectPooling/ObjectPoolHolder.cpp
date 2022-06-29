@@ -3,6 +3,8 @@
 string ObjectPoolHolder::ENEMY_POOL_TAG = "EnemyPool";
 string ObjectPoolHolder::PROJECT_POOL_TAG = "ProjectilePool";
 string ObjectPoolHolder::BOX_POOL_TAG = "BoxPool";
+string ObjectPoolHolder::VFX_POOL_TAG = "VFXPool";
+
 
 ObjectPoolHolder* ObjectPoolHolder::sharedInstance = NULL;
 

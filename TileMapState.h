@@ -1,5 +1,6 @@
 #pragma once
 #include "TileState.h"
+#include "Player.h"
 #include <iostream>
 
 #include <unordered_map>
@@ -17,6 +18,9 @@ public:
 	void loadAll();
 
 	void registerPosition(sf::Vector2f Pos, std::string name);
+	void unRegisterPosition(sf::Vector2f Pos);
+
+	//void registerExplosion
 	string convertString(sf::Vector2f Pos);
 
 	//Summon Randomizer
@@ -24,7 +28,17 @@ public:
 	
 	//
 	sf::Vector2f findNearestNeighbor(sf::Vector2f pos);
+	bool checkOccupancy(sf::Vector2f Pos);
+	
 
+	//Bomb Attributes
+	void registerExplosion(sf::Vector2f Pos, int direction, int count);
+	void unregisterExplosion(sf::Vector2f Pos);
+	bool checkhasExploded(sf::Vector2f Pos);
+	bool validTile(sf::Vector2f Pos);
+
+	sf::Vector2f onInitiateExplotion();
+	int availableExplotion();
 
 private:
 	//set constructor to private
@@ -32,7 +46,7 @@ private:
 	
 	float computeEuclideanDistance(sf::Vector2f A, sf::Vector2f B);
 	
-	bool checkOccupancy(sf::Vector2f Pos);
+
 	
 	static TileMapState* sharedInstance;
 	TileState* tileState;

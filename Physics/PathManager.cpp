@@ -37,6 +37,7 @@ void PathManager::trackObject(Collider* object)
 void PathManager::untrackObject(Collider* object)
 {
     this->forCleaningObjects.push_back(object);
+    this->cleanUpObjects(Objects);
 }
 
 void PathManager::trackWallObject(Collider* object)
@@ -47,7 +48,8 @@ void PathManager::trackWallObject(Collider* object)
 
 void PathManager::untrackWallObject(Collider* object)
 {
-    this->forCleaningObjects.push_back(object);
+    this->forCleaningWalls.push_back(object);
+    this->cleanUpObjects(Walls);
 }
 
 void PathManager::operate()
@@ -93,7 +95,7 @@ void PathManager::operate()
         this->trackedObject[i]->setChecked(false);
     }
 
-    this->cleanUpObjects();
+    //this->cleanUpObjects();
 }
 
 bool PathManager::predictMovement(Collider* collider, int direction)
@@ -217,11 +219,48 @@ bool PathManager::collidedPath(sf::FloatRect A, sf::FloatRect B)
     return false;
 }
 
-void PathManager::cleanUpObjects()
+void PathManager::cleanUpObjects(CleaningTypes types)
 {
-    for (int i = 0; i < this->forCleaningObjects.size(); i++) {
-        this->trackedObject.erase(this->trackedObject.begin() + i);
+
+    if (types == CleaningTypes::Objects) {
+        for (int i = 0; i < this->forCleaningObjects.size(); i++) {
+            this->trackedObject.erase(this->trackedObject.begin() + i);
+        }
+
+        this->forCleaningObjects.clear();
     }
 
-    this->forCleaningObjects.clear();
+    else if (types == CleaningTypes::Walls) {
+        CollisionList::iterator itr = wallTrackObject.begin();
+
+        int index;
+        for (int i = 0; i < this->forCleaningWalls.size(); i++) {
+            int j = 0;
+            while (itr != wallTrackObject.end()) {
+                
+                if (wallTrackObject[j] == forCleaningWalls[i]) {
+                    cout << "Found " << j << endl;
+                    index = j;
+                    break;
+                    
+                }
+
+                itr++;
+                j++;
+            }
+
+            this->wallTrackObject.erase(this->wallTrackObject.begin() + index);
+            this->wallTrackObject.shrink_to_fit();
+            /*if (it != wallTrackObject.end()) {
+
+                int index = std::distance(wallTrackObject.begin(), it);
+
+                this->wallTrackObject.erase(this->wallTrackObject.begin() + index);
+                this->wallTrackObject.shrink_to_fit();
+            }*/
+        }
+
+        this->forCleaningWalls.clear();
+    }
+    
 }

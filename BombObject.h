@@ -1,7 +1,7 @@
 #pragma once
 #include "ObjectPooling/APoolable.h"
 #include "AGameObject.h"
-//#include "Component/ProjectileMovement.h"
+#include "Component/BombBehaviour.h"
 #include "Physics/PhysicsManager.h"
 class BombObject :
     public APoolable, CollisionListener
@@ -18,7 +18,7 @@ public:
     void onCollisionEnter(AGameObject* contatct);
     void onCollisionExit(AGameObject* contact);
 private:
-    //BombObject* bombObject = NULL;
+    BombBehaviour* bombBehaviour = NULL;
     Collider* collider = NULL;
     Collider* movementCollider = NULL;
     bool hasHit = false;

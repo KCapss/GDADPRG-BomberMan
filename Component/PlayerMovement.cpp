@@ -64,11 +64,12 @@ void PlayerMovement::perform()
 
 	}
 
-	if (inputController->hasFired()) {
+	if (inputController->hasFired() && ticks > BOMB_SPAWN_INTERVAL) {
 
 		this->bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
 		this->ticks = 0.0f;
 		this->bombPool->requestPoolable();
+		cout << "Spawned" << endl;
 	}
 
 	/*else if (this->checkOutofBounds(player, inputController) && player->getBlockedStatus()) {

@@ -8,6 +8,11 @@
 #include "GameObjectManager.h"
 #include "TileMapState.h"
 #include "Physics/PathManager.h"
+
+
+//Component
+
+
 //Others
 
 #include "ObjectPooling/ObjectPoolHolder.h"
@@ -38,6 +43,10 @@ void BombObject::initialize()
     renderer->assignDrawable(sprite);
     this->attachComponent(renderer);
 
+
+    this->bombBehaviour = new BombBehaviour("Bomb_Behaviour");
+    this->attachComponent(bombBehaviour);
+
     this->collider = new Collider("BombCollider");
 
     collider->setLocalBounds(sprite->getGlobalBounds());
@@ -53,7 +62,7 @@ void BombObject::initialize()
 
 void BombObject::onRelease()
 {
-    //PhysicsManager::getInstance()->untrackObject(this->collider);
+    PathManager::getInstance()->untrackWallObject(this->collider);
 }
 
 void BombObject::onActivate()

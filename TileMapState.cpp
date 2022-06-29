@@ -85,7 +85,7 @@ sf::Vector2f TileMapState::findNearestNeighbor(sf::Vector2f pos)
 
 			float currDistance = this->computeEuclideanDistance(pos, this->mapEnvinronment[i][j]);
 			if (lowestDist > currDistance) {
-				cout << "distance: " << currDistance << endl;
+				//cout << "distance: " << currDistance << endl;
 				lowestDist = currDistance;
 				tempPos = this->mapEnvinronment[i][j];
 

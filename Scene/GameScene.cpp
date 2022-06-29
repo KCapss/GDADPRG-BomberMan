@@ -71,7 +71,7 @@ void GameScene::onLoadObjects()
 	this->bombPool = new GameObjectPool
 	(ObjectPoolHolder::PROJECT_POOL_TAG,
 		new BombObject("projectile"),
-		1,
+		3,
 		bombSpawner);
 
 	this->bombPool->initialize();

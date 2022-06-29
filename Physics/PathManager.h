@@ -13,6 +13,11 @@ typedef vector<Collider*> CollisionList;
 #include<vector>
 #include<unordered_map>
 
+enum CleaningTypes {
+    Objects = 0,
+    Walls = 1
+};
+
 
 class PathManager :
     public AComponent
@@ -30,6 +35,7 @@ public:
     //For Wall
     void trackWallObject(Collider* object);
     void untrackWallObject(Collider* object);
+
     void perform() {};
     void operate();
 
@@ -49,8 +55,9 @@ private:
     CollisionList wallTrackObject;
 
     CollisionList forCleaningObjects;
+    CollisionList forCleaningWalls;
 
-    void cleanUpObjects();
+    void cleanUpObjects(CleaningTypes types);
 
 
 

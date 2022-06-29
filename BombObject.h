@@ -15,13 +15,18 @@ public:
     void onActivate();
     APoolable* clone();
 
-    void onCollisionEnter(AGameObject* contatct);
+    void onCollisionEnter(AGameObject* contact);
     void onCollisionExit(AGameObject* contact);
+
+    bool hitConfirmed();
+    void resetHit();
 private:
 
     BombBehaviour* bombBehaviour = NULL;
     Collider* collider = NULL;
     Collider* movementCollider = NULL;
+
+
     bool hasHit = false;
 
     sf::Vector2f tempPosition = sf::Vector2f (0, 0);

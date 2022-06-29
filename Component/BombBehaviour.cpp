@@ -11,16 +11,17 @@ BombBehaviour::BombBehaviour(string name): AComponent(name, Script)
 
 void BombBehaviour::perform()
 {
+	BombObject* bomb = (BombObject*)this->getOwner();
 	this->ticks += this->deltaTime.asSeconds();
 
-	if (this->ticks > 3.0f) {
+	if (this->ticks > 3.0f || bomb->hitConfirmed()) {
 		reset();
 		//Do some action
 
 		int maxRange = PlayerState::getInstance()->retrieveMaxRange();
 		int vfxTileCount = (maxRange * 4) + 1;
 
-		BombObject *bomb = (BombObject*)this->getOwner();
+		
 		for (int i = 4; i >= 0; i--) {
 			sf::Vector2f posPlaceholder = bomb->getTransformable()->getPosition();
 			TileMapState::getInstance()->registerExplosion(posPlaceholder, i, 0);
@@ -44,5 +45,7 @@ void BombBehaviour::perform()
 
 void BombBehaviour::reset()
 {
+	BombObject* bomb = (BombObject*)this->getOwner();
+	bomb->resetHit();
 	this->ticks = 0.0f;
 }

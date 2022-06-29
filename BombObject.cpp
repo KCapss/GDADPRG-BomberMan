@@ -53,17 +53,18 @@ void BombObject::initialize()
     collider->setCollisionListener(this);
     this->attachComponent(collider);
 
-    /*this->movementCollider = new Collider("movementBombCollider");
+    this->movementCollider = new Collider("hitBoxCollider");
 
     movementCollider->setLocalBounds(sprite->getGlobalBounds());
     movementCollider->setCollisionListener(this);
-    this->attachComponent(movementCollider);*/
+    this->attachComponent(movementCollider);
 }
 
 void BombObject::onRelease()
 {
     PathManager::getInstance()->untrackWallObject(this->collider);
     TileMapState::getInstance()->unRegisterPosition(tempPosition);
+    PhysicsManager::getInstance()->untrackObject(this->movementCollider);
 }
 
 void BombObject::onActivate()
@@ -79,6 +80,7 @@ void BombObject::onActivate()
     this->tempPosition = position;
 
     PathManager::getInstance()->trackWallObject(this->collider);
+    PhysicsManager::getInstance()->trackObject(this->movementCollider);
     TileMapState::getInstance()->registerPosition(position, this->name);
     
     this->collider->setAlreadyCollided(true); //Assume the bomb is under the player
@@ -91,7 +93,7 @@ APoolable* BombObject::clone()
     return copyObj;
 }
 
-void BombObject::onCollisionEnter(AGameObject* contatct)
+void BombObject::onCollisionEnter(AGameObject* contact)
 {
     /*if (contatct->getName().find("enemy") != string::npos && !this->hasHit) {
         this->hasHit = true;
@@ -99,8 +101,23 @@ void BombObject::onCollisionEnter(AGameObject* contatct)
         projectilePool->releasePoolable((APoolable*)this);
         cout << "HIT" << endl;
     }*/
+    //cout << "Collided with" << contact->getName() << endl;
+
+    if (contact->getName().find("VFX") != std::string::npos) {
+        this->hasHit = true;
+    }
 }
 
 void BombObject::onCollisionExit(AGameObject* contact)
 {
+}
+
+bool BombObject::hitConfirmed()
+{
+    return this->hasHit;
+}
+
+void BombObject::resetHit()
+{
+    this->hasHit = false;
 }

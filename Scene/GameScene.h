@@ -16,7 +16,8 @@ public:
     void onUnloadResources();
    
 private:
-    GameObjectPool* projectilePool;
+    GameObjectPool* bombPool;
+    GameObjectPool* bombVFXPool;
 
 };
 

@@ -12,5 +12,7 @@ public:
 private:
 
     GameObjectPool* boxPool;
+    int boxCount = 0;
+    int currCount = 0;
 };
 

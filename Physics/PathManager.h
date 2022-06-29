@@ -3,7 +3,7 @@
 #include "../AGameObject.h"
 #include "Collider.h"
 
-#include "../Player.h"
+
 
 
 
@@ -12,6 +12,11 @@ typedef vector<Collider*> CollisionList;
 
 #include<vector>
 #include<unordered_map>
+
+enum CleaningTypes {
+    Objects = 0,
+    Walls = 1
+};
 
 
 class PathManager :
@@ -30,11 +35,18 @@ public:
     //For Wall
     void trackWallObject(Collider* object);
     void untrackWallObject(Collider* object);
+
     void perform() {};
     void operate();
 
+    //For Player
     bool predictMovement(Collider *collider, int direction);
     bool collidedPath(sf::FloatRect A, sf::FloatRect B);
+
+    //For Enemies
+
+    //For Bomb
+    void checkIntersection(Collider* collider, sf::FloatRect bounds);
 
 
     //Special Case
@@ -49,8 +61,9 @@ private:
     CollisionList wallTrackObject;
 
     CollisionList forCleaningObjects;
+    CollisionList forCleaningWalls;
 
-    void cleanUpObjects();
+    void cleanUpObjects(CleaningTypes types);
 
 
 

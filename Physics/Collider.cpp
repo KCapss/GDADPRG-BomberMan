@@ -16,7 +16,7 @@ void Collider::setChecked(bool flag)
 
 bool Collider::isChecked()
 {
-    return false;
+    return this->checked;
 }
 
 bool Collider::willCollide(Collider* another)
@@ -29,7 +29,7 @@ bool Collider::willCollide(Collider* another)
 
 bool Collider::alreadyCollided()
 {
-    return false;
+    return this->collided;
 }
 
 void Collider::setAlreadyCollided(bool flag)

@@ -54,7 +54,7 @@ APoolable* GameObjectPool::requestPoolable()
 	}
 
 	else {
-		//std::cout << " No more poolable " + this->objectCopy->getName() + " available! \n";
+		std::cout << " No more poolable " + this->objectCopy->getName() + " available! \n";
 		checkFinishedObject();
 		return NULL;
 	}

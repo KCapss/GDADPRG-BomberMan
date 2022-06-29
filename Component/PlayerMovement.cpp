@@ -1,5 +1,5 @@
 #include "PlayerMovement.h"
-
+#include "../TileMapState.h"
 
 
 #include "../ObjectPooling/ObjectPoolHolder.h"
@@ -30,6 +30,7 @@ void PlayerMovement::perform()
 	sf::Vector2f offset(0.0f, 0.0f);
 
 	//PathManager::getInstance()->operate();
+	this->ticks += deltaTime.asSeconds(); //preven spamming
 
 	if (this->checkOutofBounds(player, inputController) && 
 		!player->getBlockedStatus() &&
@@ -57,11 +58,30 @@ void PlayerMovement::perform()
 			playerTransformable->move(offset * deltaTime.asSeconds());
 			player->changeOrientation(PlayerFacing::playerRight);
 		}
+
+		
+		
+
 	}
 
-	else if (this->checkOutofBounds(player, inputController) && player->getBlockedStatus()) {
-		adjustPos(player);
+	if (inputController->hasFired() && ticks > BOMB_SPAWN_INTERVAL) {
+
+		sf::Vector2f position  = player->getTransformable()->getPosition();
+		position = TileMapState::getInstance()->findNearestNeighbor(position);
+		
+		if (TileMapState::getInstance()->checkOccupancy(position)) {
+			this->bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
+			this->ticks = 0.0f;
+			this->bombPool->requestPoolable();
+			cout << "Spawned" << endl;
+		}
+
+		
 	}
+
+	/*else if (this->checkOutofBounds(player, inputController) && player->getBlockedStatus()) {
+		adjustPos(player);
+	}*/
 
 
 	//this->ticks += deltaTime.asSeconds(); //preven spamming

@@ -7,7 +7,8 @@ enum PlayerFacing {
 	playerUp = 0,
 	playerDown = 1,
 	playerLeft = 2,
-	playerRight = 3
+	playerRight = 3,
+	playerCenter = 4
 };
 
 class Player :

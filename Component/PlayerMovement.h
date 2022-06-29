@@ -18,10 +18,10 @@ public:
 
 private:
 	float SPEED_MULLTIPLIER = 300.0f;
-	const float BULLET_SPAWN_INTERVAL = 0.2f;
+	const float BOMB_SPAWN_INTERVAL = 0.2f;
 	float ticks = 0.0f;
 
-	GameObjectPool* projectilePool;
+	GameObjectPool* bombPool;
 
 
 };

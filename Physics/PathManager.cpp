@@ -1,4 +1,6 @@
 #include "PathManager.h"
+#include "../Player.h"
+#include "../BombVFX.h"
 #include <iostream>
 #include <cmath>
 
@@ -37,6 +39,7 @@ void PathManager::trackObject(Collider* object)
 void PathManager::untrackObject(Collider* object)
 {
     this->forCleaningObjects.push_back(object);
+    this->cleanUpObjects(Objects);
 }
 
 void PathManager::trackWallObject(Collider* object)
@@ -47,7 +50,8 @@ void PathManager::trackWallObject(Collider* object)
 
 void PathManager::untrackWallObject(Collider* object)
 {
-    this->forCleaningObjects.push_back(object);
+    this->forCleaningWalls.push_back(object);
+    this->cleanUpObjects(Walls);
 }
 
 void PathManager::operate()
@@ -93,7 +97,7 @@ void PathManager::operate()
         this->trackedObject[i]->setChecked(false);
     }
 
-    this->cleanUpObjects();
+    //this->cleanUpObjects();
 }
 
 bool PathManager::predictMovement(Collider* collider, int direction)
@@ -159,15 +163,29 @@ bool PathManager::predictMovement(Collider* collider, int direction)
             wallBounds.height - 4.0f);
 
 
-        /*cout << "x: " << wallBounds.left
-            << " y: " << wallBounds.top << endl;*/
-        if (bounds.intersects(wallBounds)) {
-            /*cout << "collide" << endl;
-            cout << "x: " << wallBounds.left
-                << " y: " << wallBounds.top << endl;*/
-         
+        //for bomb
+        if (wallTrackObject[i]->getName() == "BombCollider") {
+            if (bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
+                return true;
+
+            else if(!bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
+            {
+                wallTrackObject[i]->setAlreadyCollided(false);
+                return true;
+            }
+
+            else if (!bounds.intersects(wallBounds) && !wallTrackObject[i]->alreadyCollided())
+            {
+                return true;
+            }
+
             return false;
-       }
+        }
+
+        
+        if (bounds.intersects(wallBounds)) {
+            return false;
+        }
     }
 
     /*cout << "x: " << bounds.left
@@ -203,11 +221,73 @@ bool PathManager::collidedPath(sf::FloatRect A, sf::FloatRect B)
     return false;
 }
 
-void PathManager::cleanUpObjects()
+void PathManager::checkIntersection(Collider* collider, sf::FloatRect bounds)
 {
-    for (int i = 0; i < this->forCleaningObjects.size(); i++) {
-        this->trackedObject.erase(this->trackedObject.begin() + i);
+
+    BombVFX* bombVFX = (BombVFX*)collider->getOwner();
+
+
+    for (int i = 0; i < this->wallTrackObject.size(); i++) {
+        sf::FloatRect wallBounds = wallTrackObject[i]->getGlobalBounds();
+
+       /* wallBounds = sf::FloatRect(wallBounds.left,
+            wallBounds.top + 32.0f,
+            wallBounds.width - 32.0f,
+            wallBounds.height  - 32.0f);*/
+
+        wallBounds = sf::FloatRect(wallBounds.left,
+            wallBounds.top + 32.0f,
+            wallBounds.width,
+            wallBounds.height);
+
+       // cout << "Name: " << wallTrackObject[i]->getName() << endl;
+        if (wallTrackObject[i]->getName() == "Box") {
+
+            if (bounds.intersects(wallBounds)) {
+                wallTrackObject[i]->collisionExit(collider->getOwner());
+                //break;
+            }
+            
+        }
+    }
+}
+
+void PathManager::cleanUpObjects(CleaningTypes types)
+{
+
+    if (types == CleaningTypes::Objects) {
+        for (int i = 0; i < this->forCleaningObjects.size(); i++) {
+            this->trackedObject.erase(this->trackedObject.begin() + i);
+        }
+
+        this->forCleaningObjects.clear();
     }
 
-    this->forCleaningObjects.clear();
+    else if (types == CleaningTypes::Walls) {
+        CollisionList::iterator itr = wallTrackObject.begin();
+
+        int index;
+        for (int i = 0; i < this->forCleaningWalls.size(); i++) {
+            int j = 0;
+            while (itr != wallTrackObject.end()) {
+                
+                if (wallTrackObject[j] == forCleaningWalls[i]) {
+                   /* cout << "Found " << j << endl;*/
+                    index = j;
+                    break;
+                    
+                }
+
+                itr++;
+                j++;
+            }
+
+            this->wallTrackObject.erase(this->wallTrackObject.begin() + index);
+            this->wallTrackObject.shrink_to_fit();
+        
+        }
+
+        this->forCleaningWalls.clear();
+    }
+    
 }

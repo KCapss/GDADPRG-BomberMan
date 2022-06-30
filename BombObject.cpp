@@ -86,6 +86,7 @@ void BombObject::onActivate()
     TileMapState::getInstance()->registerPosition(position, this->name);
     
     this->collider->setAlreadyCollided(true); //Assume the bomb is under the player
+    this->collider->setChecked(true); //Assume the bomb is under the player
     
     //this->collider->setAlreadyCollided(true)
     

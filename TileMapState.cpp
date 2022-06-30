@@ -224,17 +224,23 @@ void TileMapState::registerExplosion(sf::Vector2f Pos, int direction, int count)
 			Pos = sf::Vector2f(Pos.x + 64.0f, Pos.y);
 		}
 
-		if (validTile(Pos) && !checkhasExploded(Pos)) {
+		/*if (validTile(Pos) && !checkhasExploded(Pos))*/ //Return it later
+		if (validTile(Pos)) {
 			string key = this->convertString(Pos);
 			this->mapLayout[key]->activateExplosion();
 
 			/*cout << "Name : " << this->mapLayout[key]->getName() << endl;*/
-
+			
 			if (this->mapLayout[key]->getName() == "Box") {
+				cout << this->mapLayout[key]->getName() << endl;
+			}
+
+			else if (this->mapLayout[key]->getName() == "projectile") {
 
 			}
 
 			else if (PlayerState::getInstance()->retrieveMaxRange() - 1 > count) {
+				//cout << this->mapLayout[key]->getName() << endl;
 				this->registerExplosion(Pos, direction, count + 1);
 			}
 		}

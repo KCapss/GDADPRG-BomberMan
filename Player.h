@@ -32,12 +32,18 @@ public:
 	void onCollisionEnter(AGameObject* contact);
 	void onCollisionExit(AGameObject* gameObject);
 
+	void incrementBombUsedCount(int count);
+	int getUsedBombCount();
+
 protected:
 	bool isBlocked = false;
 
 
 private:
 	const float SPEED_MULLTIPLIER = 300.0f;
+
+	int usedBombCount;
+	
 
 	ObjectFacing playerOrientation = ObjectFacing::lookDown;
 	bool canMove = true;

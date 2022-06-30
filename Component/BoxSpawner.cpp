@@ -23,9 +23,11 @@ void BoxSpawner::perform()
 {
 	if (boxCount > currCount) {
 		GameObjectPool* boxPoolHandler = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::BOX_POOL_TAG);
-		boxPoolHandler->requestPoolable();
+		//boxPoolHandler->requestPoolable();
+		boxPoolHandler->requestPoolableBatch(boxCount);
 
-		currCount++;
+		//currCount++;
+		currCount += boxCount;
 	}
 	
 }

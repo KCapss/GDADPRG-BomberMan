@@ -74,15 +74,23 @@ void PlayerMovement::perform()
 
 	}
 
-	if (inputController->hasFired() && ticks > BOMB_SPAWN_INTERVAL) {
+	int maxBombCount = PlayerState::getInstance()->retrieveMaxBombCount();
+
+	if (inputController->hasFired() && 
+		ticks > BOMB_SPAWN_INTERVAL && 
+		 maxBombCount > player->getUsedBombCount() ) {
 
 		sf::Vector2f position  = player->getTransformable()->getPosition();
 		position = TileMapState::getInstance()->findNearestNeighbor(position);
 		
 		if (TileMapState::getInstance()->checkOccupancy(position)) {
+			
 			this->bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
 			this->ticks = 0.0f;
 			this->bombPool->requestPoolable();
+
+			player->incrementBombUsedCount(1);
+
 			cout << "Spawned" << endl;
 		}
 

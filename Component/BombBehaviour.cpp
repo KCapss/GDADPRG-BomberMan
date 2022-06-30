@@ -1,10 +1,15 @@
 #include "BombBehaviour.h"
 #include "../AGameObject.h"
+
 #include "../ObjectPooling/ObjectPoolHolder.h"
+
 #include "../TextureManager.h"
 #include "../TileMapState.h"
 #include "../PlayerState.h"
+
 #include "../BombObject.h"
+#include "../GameObjectManager.h"
+#include "../Player.h"
 BombBehaviour::BombBehaviour(string name): AComponent(name, Script)
 {
 }
@@ -38,6 +43,9 @@ void BombBehaviour::perform()
 		GameObjectPool* bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
 		bombPool->releasePoolable((APoolable*)this->getOwner());
 
+
+		Player* player = (Player*)GameObjectManager::getInstance()->findObjectByName("Player");
+		player->incrementBombUsedCount(-1);
 		//RemoveObject
 
 	}

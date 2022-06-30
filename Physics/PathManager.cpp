@@ -184,7 +184,7 @@ bool PathManager::predictMovement(Collider* collider, int direction, int objType
 
             if (bounds.intersects(wallBounds)) {
                 if (wallTrackObject[i]->alreadyCollided() && collider->getName() == "Player") {
-                    cout << "pass through" << endl;
+                    //cout << "pass through" << endl;
                     return true;
                 }
  
@@ -204,18 +204,13 @@ bool PathManager::predictMovement(Collider* collider, int direction, int objType
                 return true;
             }
 
-            cout << "Px: " << bounds.left
-                << " Py: " << bounds.top << endl;
-
-            cout << "x: " << wallBounds.left
-                << " y: " << wallBounds.top << endl;
-
-            /*cout << "boundary error" << endl;
-            cout << "Px: " << bounds.left
+            /*cout << "Px: " << bounds.left
                 << " Py: " << bounds.top << endl;
 
             cout << "x: " << wallBounds.left
                 << " y: " << wallBounds.top << endl;*/
+
+            
             return false;
         }
 

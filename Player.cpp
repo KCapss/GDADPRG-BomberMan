@@ -13,6 +13,7 @@
 
 Player::Player(std::string name): AGameObject(name), CollisionListener()
 {
+	
 }
 
 void Player::initialize()
@@ -96,4 +97,14 @@ void Player::onCollisionEnter(AGameObject* contact)
 
 void Player::onCollisionExit(AGameObject* gameObject)
 {
+}
+
+void Player::incrementBombUsedCount(int count)
+{
+	this->usedBombCount += count;
+}
+
+int Player::getUsedBombCount()
+{
+	return this->usedBombCount;
 }

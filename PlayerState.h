@@ -10,8 +10,9 @@ public:
 	static PlayerState* getInstance();
 	void initialize();
 
-	//initialize
-	
+	//Getter for Player
+	void updatePos(sf::Vector2f pos);
+	sf::Vector2f retrievePlayerPos();
 
 	//Getter Function
 	int retrieveMaxRange();
@@ -35,6 +36,8 @@ private:
 	PlayerState() {};
 
 	static PlayerState* sharedInstance;
+
+	sf::Vector2f playerPos = sf::Vector2f(0, 0);
 
 	//Player Properties
 	int maxBombCount = 1;

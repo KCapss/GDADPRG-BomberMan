@@ -24,7 +24,7 @@ private:
 
     BombBehaviour* bombBehaviour = NULL;
     Collider* collider = NULL;
-    Collider* movementCollider = NULL;
+    //Collider* movementCollider = NULL;
 
 
     bool hasHit = false;

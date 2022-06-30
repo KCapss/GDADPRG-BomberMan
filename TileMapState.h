@@ -16,6 +16,7 @@ class TileMapState: sf::NonCopyable
 public:
 	static TileMapState* getInstance();
 	void loadAll();
+	void resetAll();
 
 	void registerPosition(sf::Vector2f Pos, std::string name);
 	void unRegisterPosition(sf::Vector2f Pos);

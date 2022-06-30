@@ -48,7 +48,7 @@ void Player::initialize()
 
 }
 
-void Player::changeOrientation(PlayerFacing playerOrientation)
+void Player::changeOrientation(ObjectFacing playerOrientation)
 {
 	this->playerOrientation = playerOrientation;
 }
@@ -59,7 +59,7 @@ void Player::changeBlockStatus(bool flag)
 	
 }
 
-PlayerFacing Player::retrieveOrientation()
+ObjectFacing Player::retrieveOrientation()
 {
 	return this->playerOrientation;
 }
@@ -81,7 +81,17 @@ void Player::onCollisionEnter(AGameObject* contact)
 	//	//cout << "Collision Detected" << endl;
 	//}
 
-	cout << " you died" << endl;
+	//cout << " you died" << endl;
+	//cout << "Collision Monster with " << contact->getName() << endl;
+
+	if (contact->getName().find("enemy") != std::string::npos) {
+		cout << " you died" << endl;
+	}
+
+	if (contact->getName().find("VFX") != std::string::npos) {
+		cout << " you died" << endl;
+	}
+	
 }
 
 void Player::onCollisionExit(AGameObject* gameObject)

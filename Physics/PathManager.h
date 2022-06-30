@@ -18,6 +18,10 @@ enum CleaningTypes {
     Walls = 1
 };
 
+enum ObjectTypes {
+    Character = 2,
+    NonCharacter = 3
+};
 
 class PathManager :
     public AComponent
@@ -40,7 +44,8 @@ public:
     void operate();
 
     //For Player
-    bool predictMovement(Collider *collider, int direction);
+    bool predictMovement(Collider *collider, int direction, int objType);
+   
     bool collidedPath(sf::FloatRect A, sf::FloatRect B);
 
     //For Enemies

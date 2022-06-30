@@ -44,6 +44,19 @@ void TileMapState::loadAll()
 	
 }
 
+void TileMapState::resetAll()
+{
+	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
+		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
+			string key = this->convertString(this->mapEnvinronment[i][j]);
+
+			this->mapLayout[key]->reset();
+			this->mapLayout[key]->resetExplosion();
+
+		}
+	}
+}
+
 string TileMapState::convertString(sf::Vector2f Pos)
 {
 	int x = Pos.x;
@@ -67,15 +80,18 @@ sf::Vector2f TileMapState::randomizeSpawn(string name)
 
 					if ((i == 0 && j == 0) || (i == 1 && j == 0) || (i == 0 && j == 1))
 					{
-
+						//Empty
 					}
+
+					else if (((i == 0 && j == 2) || (i == 2 && j == 0)) && name == "enemy") {
+						//Empty
+					}
+
 					else
 						return this->mapEnvinronment[i][j];
 				}
 				else {
-					/*cout << "occupied X: " <<
-						this->mapEnvinronment[i][j].x <<
-						" Y: " << this->mapEnvinronment[i][j].y << endl;*/
+					
 				}
 			}
 		}
@@ -178,7 +194,7 @@ bool TileMapState::checkOccupancy(sf::Vector2f Pos)
 void TileMapState::registerExplosion(sf::Vector2f Pos, int direction, int count)
 {
 	//Special Case
-	if (direction == PlayerFacing::playerCenter)
+	if (direction == ObjectFacing::inCenter)
 	{
 		if (validTile(Pos) && !checkhasExploded(Pos)) {
 			string key = this->convertString(Pos);
@@ -188,22 +204,22 @@ void TileMapState::registerExplosion(sf::Vector2f Pos, int direction, int count)
 
 	//Cardinal Direction
 	else {
-		if (direction == PlayerFacing::playerUp)
+		if (direction == ObjectFacing::lookUp)
 		{
 			Pos = sf::Vector2f(Pos.x, Pos.y - 64.0f);
 		}
 
-		else if (direction == PlayerFacing::playerDown)
+		else if (direction == ObjectFacing::lookDown)
 		{
 			Pos = sf::Vector2f(Pos.x, Pos.y + 64.0f);
 		}
 
-		else if (direction == PlayerFacing::playerLeft)
+		else if (direction == ObjectFacing::lookLeft)
 		{
 			Pos = sf::Vector2f(Pos.x - 64.0f, Pos.y);
 		}
 
-		else if (direction == PlayerFacing::playerRight)
+		else if (direction == ObjectFacing::lookRight)
 		{
 			Pos = sf::Vector2f(Pos.x + 64.0f, Pos.y);
 		}

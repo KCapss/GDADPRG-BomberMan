@@ -16,6 +16,16 @@ void PlayerState::initialize()
 	this->maxRange = 1;
 }
 
+void PlayerState::updatePos(sf::Vector2f pos)
+{
+	this->playerPos = pos;
+}
+
+sf::Vector2f PlayerState::retrievePlayerPos()
+{
+	return this->playerPos;
+}
+
 int PlayerState::retrieveMaxRange()
 {
 	return this->maxRange;

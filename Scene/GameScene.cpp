@@ -11,6 +11,9 @@
 #include "../WallManager.h"
 #include "../BombObject.h"
 #include "../BombVFX.h"
+#include "../EnemyObject.h"
+#include "../Component/EnemySpawnHandler.h"
+
 
 //All UI
 #include "../Screen/HUD.h"
@@ -22,7 +25,7 @@
 
 //AllPool
 #include "../ObjectPooling/ObjectPoolHolder.h"
-
+#include "../TileMapState.h"
 
 
 #include "../EmptyGameObject.h"
@@ -61,7 +64,7 @@ void GameScene::onLoadObjects()
 	GameObjectManager::getInstance()->addObject(walldesign);
 
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(55, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(40, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
@@ -93,6 +96,16 @@ void GameScene::onLoadObjects()
 	this->bombVFXPool->initialize();
 	ObjectPoolHolder::getInstance()->registerObjectPool(bombVFXPool);
 
+
+	//Enemy
+	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
+	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(1, "EnemySpawner", enemiesManager);
+
+	enemiesManager->attachComponent(enemySpawner);
+	GameObjectManager::getInstance()->addObject(enemiesManager);
+
+
+	//Player
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);
 	player->setPosition((64.0f) + 32.0f, (64.0f * 2.f) + 32.0f);
@@ -101,7 +114,7 @@ void GameScene::onLoadObjects()
 
 	
 
-	
+	//HUD
 	HUD* hudMenu = new HUD("HUDMenu");
 	GameObjectManager::getInstance()->addObject(hudMenu);
 
@@ -114,8 +127,21 @@ void GameScene::onLoadObjects()
 
 void GameScene::onUnloadResources()
 {
-	//GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);
-	//ObjectPoolHolder::getInstance()->unregisterObjectPool(enemyPool);
+	//Unload Pool
+	GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(enemyPool);
+
+	GameObjectPool* bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(bombPool);
+
+	GameObjectPool* bombVFXPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::VFX_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(bombVFXPool);
+
+	GameObjectPool* boxPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::BOX_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(boxPool);
+
+	TileMapState::getInstance()->resetAll();
+
 	AScene::onUnloadObjects();
 }
 

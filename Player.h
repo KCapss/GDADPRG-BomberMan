@@ -3,12 +3,12 @@
 #include "Physics/PathManager.h"
 #include "Physics/PhysicsManager.h"
 
-enum PlayerFacing {
-	playerUp = 0,
-	playerDown = 1,
-	playerLeft = 2,
-	playerRight = 3,
-	playerCenter = 4
+enum ObjectFacing {
+	lookUp = 0,
+	lookDown = 1,
+	lookLeft = 2,
+	lookRight = 3,
+	inCenter = 4
 };
 
 class Player :
@@ -20,11 +20,11 @@ public:
 	void initialize();
 
 	//Setter
-	void changeOrientation(PlayerFacing playerOrientation);
+	void changeOrientation(ObjectFacing playerOrientation);
 	void changeBlockStatus(bool flag);
 
 	//Getter
-	PlayerFacing retrieveOrientation();
+	ObjectFacing retrieveOrientation();
 	bool getBlockedStatus();
 	float retrieveSpeed();
 
@@ -39,7 +39,7 @@ protected:
 private:
 	const float SPEED_MULLTIPLIER = 300.0f;
 
-	PlayerFacing playerOrientation = PlayerFacing::playerDown;
+	ObjectFacing playerOrientation = ObjectFacing::lookDown;
 	bool canMove = true;
 
 	bool moveUp = false;

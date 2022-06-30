@@ -1,6 +1,6 @@
 #include "PlayerMovement.h"
 #include "../TileMapState.h"
-
+#include "../PlayerState.h"
 
 #include "../ObjectPooling/ObjectPoolHolder.h"
 
@@ -41,25 +41,35 @@ void PlayerMovement::perform()
 		if (inputController->isUp()) {
 			offset.y -= this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
-			player->changeOrientation(PlayerFacing::playerUp);
+			player->changeOrientation(ObjectFacing::lookUp);
+
+
 		}
 		if (inputController->isDown()) {
 			offset.y += this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
-			player->changeOrientation(PlayerFacing::playerDown);
+			player->changeOrientation(ObjectFacing::lookDown);
+
+
+
 		}
 		if (inputController->isLeft()) {
 			offset.x -= this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
-			player->changeOrientation(PlayerFacing::playerLeft);
+			player->changeOrientation(ObjectFacing::lookLeft);
+
+
+
 		}
 		if (inputController->isRight()) {
 			offset.x += this->SPEED_MULLTIPLIER;
 			playerTransformable->move(offset * deltaTime.asSeconds());
-			player->changeOrientation(PlayerFacing::playerRight);
+			player->changeOrientation(ObjectFacing::lookRight);
+
+
 		}
 
-		
+		//PlayerState::getInstance()->updatePos(playerTransformable->getPosition());
 		
 
 	}
@@ -79,18 +89,7 @@ void PlayerMovement::perform()
 		
 	}
 
-	/*else if (this->checkOutofBounds(player, inputController) && player->getBlockedStatus()) {
-		adjustPos(player);
-	}*/
-
-
-	//this->ticks += deltaTime.asSeconds(); //preven spamming
-	//if (inputController->hasFired() && this->ticks > this->BULLET_SPAWN_INTERVAL) {
-	//	
-	//	this->projectilePool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
-	//	this->ticks = 0.0f;
-	//	this->projectilePool->requestPoolable();
-	//}
+	
 	
 }
 
@@ -102,22 +101,22 @@ void PlayerMovement::adjustPos(Player* player)
 	sf::Vector2f offset(0.0f, 0.0f);
 
 
-	if (player->retrieveOrientation() == PlayerFacing::playerUp) {
+	if (player->retrieveOrientation() == ObjectFacing::lookUp) {
 		offset.y += this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos, yPos + (offset.y * deltaTime.asSeconds())));
 	}
 
-	if (player->retrieveOrientation() == PlayerFacing::playerDown) {
+	if (player->retrieveOrientation() == ObjectFacing::lookDown) {
 		offset.y -= this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos, yPos + (offset.y * deltaTime.asSeconds())));
 	}
 
-	if (player->retrieveOrientation() == PlayerFacing::playerLeft) {
+	if (player->retrieveOrientation() == ObjectFacing::lookLeft) {
 		offset.x += this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos + (offset.x * deltaTime.asSeconds()), yPos ));
 	}
 
-	if (player->retrieveOrientation() == PlayerFacing::playerRight) {
+	if (player->retrieveOrientation() == ObjectFacing::lookRight) {
 		offset.x -= this->SPEED_MULLTIPLIER;
 		playerTransformable->setPosition(sf::Vector2f(xPos + (offset.x * deltaTime.asSeconds()), yPos));
 	}
@@ -176,23 +175,25 @@ bool PlayerMovement::checkOutofBounds(Player* player, PlayerInputController *inp
 bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputController)
 {
 
-	PlayerFacing orientation;
+	ObjectFacing orientation;
 
 	if (inputController->isUp()) {
-		orientation = PlayerFacing::playerUp;
+		orientation = ObjectFacing::lookUp;
 		//cout << "Up" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
-			orientation)) {
+			orientation,
+			Character)) {
 			return true;
 		}
 
 		else return false;
 	}
 	if (inputController->isDown()) {
-		orientation = PlayerFacing::playerDown;
+		orientation = ObjectFacing::lookDown;
 		//cout << "Down" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
-			orientation)) {
+			orientation,
+			Character)) {
 			return true;
 		}
 
@@ -200,10 +201,11 @@ bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputCont
 
 	}
 	if (inputController->isLeft()) {
-		orientation = PlayerFacing::playerLeft;
+		orientation = ObjectFacing::lookLeft;
 		//cout << "Left" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
-			orientation)) {
+			orientation,
+			Character)) {
 			return true;
 		}
 
@@ -211,10 +213,11 @@ bool PlayerMovement::checkWalls(Player* player, PlayerInputController* inputCont
 
 	}
 	if (inputController->isRight()) {
-		orientation = PlayerFacing::playerRight;
+		orientation = ObjectFacing::lookRight;
 		//cout << "Right" << endl;
 		if (PathManager::getInstance()->predictMovement((Collider*)player->getComponentsofType(Physics)[0],
-			orientation)) {
+			orientation,
+			Character)) {
 			return true;
 		}
 

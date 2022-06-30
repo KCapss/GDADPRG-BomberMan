@@ -19,7 +19,7 @@ void BombBehaviour::perform()
 	BombObject* bomb = (BombObject*)this->getOwner();
 	this->ticks += this->deltaTime.asSeconds();
 
-	if (this->ticks > 3.0f || bomb->hitConfirmed()) {
+	if (this->ticks > timer || bomb->hitConfirmed()) {
 		reset();
 		//Do some action
 

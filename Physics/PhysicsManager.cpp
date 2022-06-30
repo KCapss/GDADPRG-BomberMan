@@ -74,8 +74,8 @@ void PhysicsManager::perform()
     //std::cout << "---" << endl;
     for (int i = 0; i < this->trackedObject.size(); i++) {
         
-        //std::cout << this->trackedObject[i]->getOwner()->isEnabled() << endl;
-        this->trackedObject[i]->setChecked(false);
+       
+        //this->trackedObject[i]->setChecked(false);
     }
 
     this->cleanUpObjects();

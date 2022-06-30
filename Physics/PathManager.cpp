@@ -47,6 +47,8 @@ void PathManager::trackWallObject(Collider* object)
 {
     object->setAlreadyCollided(false);
     this->wallTrackObject.push_back(object);
+
+    cout << "Size: " << wallTrackObject.size() << "Name: " << object->getName() << endl;
 }
 
 void PathManager::untrackWallObject(Collider* object)
@@ -176,42 +178,51 @@ bool PathManager::predictMovement(Collider* collider, int direction, int objType
         if (wallTrackObject[i]->getName() == "BombCollider") {
            
             
-            bounds = sf::FloatRect(bounds.left,
+            /*bounds = sf::FloatRect(bounds.left,
                 bounds.top,
                 bounds.width + 3.0f ,
-                bounds.height + 3.0f);
+                bounds.height + 3.0f);*/
+            if (wallTrackObject[i]->isChecked()) {
+
+                if (bounds.intersects(wallBounds)) {
+                    if (wallTrackObject[i]->alreadyCollided() && collider->getName() == "Player") {
+                        cout << "pass through" << endl;
+                        return true;
+                    }
+
+                }
 
 
-            if (bounds.intersects(wallBounds)) {
-                if (wallTrackObject[i]->alreadyCollided() && collider->getName() == "Player") {
-                    //cout << "pass through" << endl;
+                else if (!bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
+                {
+                    if (collider->getName() == "Player") {
+                        wallTrackObject[i]->setAlreadyCollided(false);
+                        wallTrackObject[i]->setChecked(false);
+                        cout << "Disable " << endl;
+                    }
                     return true;
                 }
- 
-            }
 
+                return false;
+           }
 
-            else if (!bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
-            {
-                if (collider->getName() == "Player") {
-                    wallTrackObject[i]->setAlreadyCollided(false);
+            if (!wallTrackObject[i]->isChecked()) {
+
+                if (wallTrackObject[i]->isChecked()) {
+
+                    if (bounds.intersects(wallBounds)) {
+                        return false;
+
+                    }
+
+                    else if (!bounds.intersects(wallBounds) && !wallTrackObject[i]->alreadyCollided())
+                    {
+                        return true;
+                    }
+
                 }
-                return true;
             }
 
-            else if (!bounds.intersects(wallBounds) && !wallTrackObject[i]->alreadyCollided())
-            {
-                return true;
-            }
-
-            /*cout << "Px: " << bounds.left
-                << " Py: " << bounds.top << endl;
-
-            cout << "x: " << wallBounds.left
-                << " y: " << wallBounds.top << endl;*/
-
-            
-            return false;
         }
 
         

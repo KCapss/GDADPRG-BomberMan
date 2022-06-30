@@ -77,7 +77,7 @@ void GameScene::onLoadObjects()
 	this->bombPool = new GameObjectPool
 	(ObjectPoolHolder::PROJECT_POOL_TAG,
 		new BombObject("projectile"),
-		3,
+		10,
 		bombSpawner);
 
 	this->bombPool->initialize();
@@ -90,7 +90,7 @@ void GameScene::onLoadObjects()
 	this->bombVFXPool = new GameObjectPool
 	(ObjectPoolHolder::VFX_POOL_TAG,
 		new BombVFX("VFX"),
-		30,
+		50,
 		VFXBombSpawner);
 
 	this->bombVFXPool->initialize();
@@ -99,7 +99,7 @@ void GameScene::onLoadObjects()
 
 	//Enemy
 	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
-	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(1, "EnemySpawner", enemiesManager);
+	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(5, "EnemySpawner", enemiesManager);
 
 	enemiesManager->attachComponent(enemySpawner);
 	GameObjectManager::getInstance()->addObject(enemiesManager);

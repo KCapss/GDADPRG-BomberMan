@@ -67,6 +67,16 @@ void PlayerState::incrementScore(int score)
 	this->score += score;
 }
 
+void PlayerState::setActivePowerUp(PowerUPType type)
+{
+	this->levelPowerUP = type;
+}
+
+PowerUPType PlayerState::retrieveActivePowerUPType()
+{
+	return this->levelPowerUP;
+}
+
 void PlayerState::resetLevel()
 {
 	this->maxBombCount = 1;

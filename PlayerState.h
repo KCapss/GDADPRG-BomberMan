@@ -3,6 +3,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+
+enum PowerUPType {
+	PowerIncrease = 0,
+	IncreaseBombCount = 1,
+	IncreasSpeed = 2,
+	Detonator = 3,
+};
+
 class PlayerState: sf::NonCopyable
 {
 
@@ -28,6 +36,12 @@ public:
 	void incrementEnemCount(int count);
 	void incrementScore(int score);
 
+	//Power Up
+	void setActivePowerUp(PowerUPType type);
+	PowerUPType retrieveActivePowerUPType();
+	
+
+
 	//Reset Level
 	void resetLevel();
 
@@ -50,7 +64,7 @@ private:
 	int enemRemains = 0;
 	int score = 0;
 
-
+	PowerUPType levelPowerUP = Detonator;
 
 };
 

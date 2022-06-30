@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include "SceneManager.h"
 
+
+#include "../PlayerState.h"
 //All obj
 //#include "../BGObject.h"
 //#include "../AirplanePlayer.h"
@@ -21,6 +23,7 @@
 
 //AllComponent
 #include "../Component/BoxSpawner.h"
+#include "../Component/PowerUpSpawner.h"
 
 
 //AllPool
@@ -49,6 +52,10 @@ void GameScene::onLoadResources()
 
 void GameScene::onLoadObjects()
 {
+	//Level Setup
+	PlayerState::getInstance()->setActivePowerUp(PowerUPType::IncreaseBombCount);
+
+
 	//Physics
 	EmptyGameObject* physicsManager = new EmptyGameObject("PhysicsManager");
 	this->registerObject(physicsManager);
@@ -59,12 +66,26 @@ void GameScene::onLoadObjects()
 	this->registerObject(pathManager);
 	PathManager::initialize("PathManager", pathManager);
 
+	//Wall
 	srand(time(NULL));
 	WallManager* walldesign = new WallManager("WallManage");
 	GameObjectManager::getInstance()->addObject(walldesign);
 
+	//PowerUp and Exit
+
+	EmptyGameObject* powerUpManager = new EmptyGameObject("PowerUpManager");
+	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner (1, "PowerUpSpawner", "IncreaseBombCount", powerUpManager);
+
+	powerUpManager->attachComponent(powerUpSpawner);
+	GameObjectManager::getInstance()->addObject(powerUpManager);
+
+	
+	//this->powerUPPool->requestPoolable();
+
+
+	//Box Spawning
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(40, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(1, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
@@ -99,7 +120,7 @@ void GameScene::onLoadObjects()
 
 	//Enemy
 	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
-	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(5, "EnemySpawner", enemiesManager);
+	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(1, "EnemySpawner", enemiesManager);
 
 	enemiesManager->attachComponent(enemySpawner);
 	GameObjectManager::getInstance()->addObject(enemiesManager);

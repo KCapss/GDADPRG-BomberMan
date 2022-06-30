@@ -2,15 +2,12 @@
 
 #include "ObjectPooling/APoolable.h"
 #include "AGameObject.h"
-#include "Component/BombBehaviour.h"
-#include "Physics/PhysicsManager.h"
 
-enum PowerUPType {
-    PowerIncrease = 0,
-    IncreaseBombCount = 1,
-    IncreasSpeed = 2,
-    Detonator  = 3,
-};
+#include "TileMapState.h"
+#include "Physics/PhysicsManager.h"
+#include "PlayerState.h"
+
+
 
 class PowerUpObject :
     public APoolable, public CollisionListener
@@ -27,15 +24,17 @@ public:
     void onCollisionEnter(AGameObject* contact);
     void onCollisionExit(AGameObject* contact);
 
-    bool hitConfirmed();
-    void resetHit();
-private:
 
-    BombBehaviour* bombBehaviour = NULL;
+    void setupSprite(PowerUPType type);
+
+   
+private:
+    sf::Vector2f tempPos;
+    
     Collider* collider = NULL;
     //Collider* movementCollider = NULL;
 
-
+    PowerUPType powerUPType;
     bool hasHit = false;
 
     sf::Vector2f tempPosition = sf::Vector2f(0, 0);

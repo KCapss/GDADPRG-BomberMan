@@ -92,6 +92,10 @@ void Player::onCollisionEnter(AGameObject* contact)
 	if (contact->getName().find("VFX") != std::string::npos) {
 		cout << " you died" << endl;
 	}
+
+	if (contact->getName().find("IncreaseBombCount") != std::string::npos) {
+	cout << " you hit PowerUP" << endl;
+	}
 	
 }
 

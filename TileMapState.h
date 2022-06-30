@@ -26,6 +26,8 @@ public:
 
 	//Summon Randomizer
 	sf::Vector2f randomizeSpawn(string name);
+	bool spawnPriorities(string name);
+	sf::Vector2f lookSpawnPriorities(string name);
 	
 	//
 	sf::Vector2f findNearestNeighbor(sf::Vector2f pos);

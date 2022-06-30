@@ -27,6 +27,7 @@ private:
 	bool haveAccess = true;
 	bool explosionActive = false;
 	bool explosionStart = false;
+
 	sf::Vector2f position = sf::Vector2f(0, 0);
 
 };

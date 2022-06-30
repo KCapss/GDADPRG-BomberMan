@@ -70,12 +70,19 @@ string TileMapState::convertString(sf::Vector2f Pos)
 sf::Vector2f TileMapState::randomizeSpawn(string name)
 {
 	sf::Vector2f spawnPos(0, 0);
+
+	if (spawnPriorities(name)) {
+		return lookSpawnPriorities(name);
+	}
 	
 	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
 		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
 
 			int randNum = rand() % 200;
+
 			if (randNum < 1) {
+
+
 				if (this->checkOccupancy(this->mapEnvinronment[i][j])) {
 
 					if ((i == 0 && j == 0) || (i == 1 && j == 0) || (i == 0 && j == 1))
@@ -87,8 +94,11 @@ sf::Vector2f TileMapState::randomizeSpawn(string name)
 						//Empty
 					}
 
-					else
+					else {
+						cout << "Spawn Completeed" << endl;
 						return this->mapEnvinronment[i][j];
+					}
+						
 				}
 				else {
 					
@@ -98,6 +108,50 @@ sf::Vector2f TileMapState::randomizeSpawn(string name)
 	}
 	
 	return randomizeSpawn(name);
+}
+
+bool TileMapState::spawnPriorities(string name)
+{
+	
+	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
+		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
+			string key = this->convertString(this->mapEnvinronment[i][j]);
+
+			//For PowerUp
+			if (mapLayout[key]->getName() == "PowerUp" &&
+				(name != "PowerUp" || name != "EndLevel")) {
+				return true;
+			}
+
+			if (mapLayout[key]->getName() == "EndLevel" &&
+				(name != "PowerUp" || name != "EndLevel")) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+sf::Vector2f TileMapState::lookSpawnPriorities(string name)
+{
+	for (int i = 0; i < this->mapEnvinronment.size(); i++) {
+		for (int j = 0; j < this->mapEnvinronment[i].size(); j++) {
+			string key = this->convertString(this->mapEnvinronment[i][j]);
+
+			//For PowerUp
+			if (mapLayout[key]->getName() == "PowerUp") {
+				return this->mapEnvinronment[i][j];
+			}
+
+			if (mapLayout[key]->getName() == "EndLevel") {
+				return this->mapEnvinronment[i][j];
+			}
+		}
+	}
+
+	cout << "false" << endl;
+	return sf::Vector2f(0, 0);
 }
 
 sf::Vector2f TileMapState::findNearestNeighbor(sf::Vector2f pos)
@@ -138,7 +192,8 @@ void TileMapState::registerPosition(sf::Vector2f Pos, std::string name)
 
 	else {
 		
-		if(this->checkOccupancy(Pos)){
+		//if(this->checkOccupancy(Pos))
+		if(true){
 			//std::cout << "Registerd Position" << std::endl;
 			this->mapLayout[key]->initialize(Pos, name);
 

@@ -3,12 +3,12 @@
 #include "../UI/UIButton.h"
 #include "../UI//UIText.h"
 #include "../UI/ButtonListener.h"
-
-class TitleScreen: public AGameObject, public ButtonListener
+class LevelSelectScreen :
+    public AGameObject, public ButtonListener
 {
 public:
-    TitleScreen(string name);
-    ~TitleScreen();
+    LevelSelectScreen(string name);
+    ~LevelSelectScreen();
     void initialize();
 
     void onButtonClick(UIButton* button);
@@ -16,21 +16,20 @@ public:
 
 private:
     //Button
-    UIButton* playBtn;
-    UIText* playTxt;
+    UIButton* lvl1Btn;
+    UIText* lvl1Txt;
 
-    UIButton* levelBtn;
-    UIText* levelTxt;
+    UIButton* lvl2Btn;
+    UIText* lvl2Txt;
 
-    UIButton* quitBtn;
-    UIText* quitTxt;
-    
+    UIButton* lvl3Btn;
+    UIText* lvl3Txt;
+
+    UIButton* backBtn;
+    UIText* backTxt;
+
     //Title Name
     UIText* titleNameTxt1;
     UIText* titleNameTxt2;
-
-    //Author Name
-    UIText* authorText;
-
 };
 

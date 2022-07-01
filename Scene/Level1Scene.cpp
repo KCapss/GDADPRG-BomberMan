@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "Level1Scene.h"
 #include "SceneManager.h"
 
 
@@ -40,20 +40,20 @@
 #include "../GameObjectManager.h"
 
 
-GameScene::GameScene(): AScene(GAME_SCENE_NAME)
+Level1Scene::Level1Scene() : AScene("Level_1")
 {
 
 }
 
-GameScene::~GameScene()
+Level1Scene::~Level1Scene()
 {
 }
 
-void GameScene::onLoadResources()
+void Level1Scene::onLoadResources()
 {
 }
 
-void GameScene::onLoadObjects()
+void Level1Scene::onLoadObjects()
 {
 
 	//Level Setup
@@ -85,12 +85,12 @@ void GameScene::onLoadObjects()
 	GameObjectManager::getInstance()->addObject(door);
 
 	EmptyGameObject* powerUpManager = new EmptyGameObject("PowerUpManager");
-	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner (1, "PowerUpSpawner", "IncreaseBombCount", powerUpManager);
+	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner(1, "PowerUpSpawner", "IncreaseBombCount", powerUpManager);
 
 	powerUpManager->attachComponent(powerUpSpawner);
 	GameObjectManager::getInstance()->addObject(powerUpManager);
 
-	
+
 	//this->powerUPPool->requestPoolable();
 
 
@@ -105,7 +105,7 @@ void GameScene::onLoadObjects()
 	EmptyGameObject* bombSpawner = new EmptyGameObject("BombSpawner");
 	GameObjectManager::getInstance()->addObject(bombSpawner);
 
-		//BombObject
+	//BombObject
 	this->bombPool = new GameObjectPool
 	(ObjectPoolHolder::PROJECT_POOL_TAG,
 		new BombObject("projectile"),
@@ -115,7 +115,7 @@ void GameScene::onLoadObjects()
 	this->bombPool->initialize();
 	ObjectPoolHolder::getInstance()->registerObjectPool(bombPool);
 
-		//VFX
+	//VFX
 	EmptyGameObject* VFXBombSpawner = new EmptyGameObject("VFXBombSpawner");
 	GameObjectManager::getInstance()->addObject(VFXBombSpawner);
 
@@ -143,10 +143,10 @@ void GameScene::onLoadObjects()
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);
 	player->setPosition((64.0f) + 32.0f, (64.0f * 2.f) + 32.0f);
-	
 
 
-	
+
+
 
 	//HUD
 	HUD* hudMenu = new HUD("HUDMenu");
@@ -157,12 +157,12 @@ void GameScene::onLoadObjects()
 
 	GameOverScreen* gameOverMenu = new GameOverScreen("GameOver");
 	GameObjectManager::getInstance()->addObject(gameOverMenu);
-	
 
-	
+
+
 }
 
-void GameScene::onUnloadResources()
+void Level1Scene::onUnloadResources()
 {
 	//Unload Pool
 	GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);

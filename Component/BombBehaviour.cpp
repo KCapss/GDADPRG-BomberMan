@@ -40,7 +40,7 @@ void BombBehaviour::perform()
 		}
 
 		int availableSpots = TileMapState::getInstance()->availableExplotion();
-		cout << "Available Spots: " << availableSpots << endl;
+		
 
 		this->bombVFXPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::VFX_POOL_TAG);
 		for (int i = 0; i < availableSpots; i++) {

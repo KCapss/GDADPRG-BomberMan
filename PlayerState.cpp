@@ -14,7 +14,7 @@ PlayerState* PlayerState::getInstance()
 void PlayerState::initialize()
 {
 	this->maxRange = 1;
-	this->maxBombCount = 1;
+	this->maxBombCount = 2;
 }
 
 void PlayerState::updatePos(sf::Vector2f pos)
@@ -94,7 +94,7 @@ PowerUPType PlayerState::retrieveActivePowerUPType()
 
 void PlayerState::resetLevel()
 {
-	this->maxBombCount = 1;
+	this->maxBombCount = 2;
 	this->maxRange = 1;
 
 	this->isAlive = true;

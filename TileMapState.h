@@ -45,7 +45,10 @@ public:
 
 	//Scene
 	void setActiveScene(string sceneName);
+	void setLevelScene(int levelNum);
+
 	string retrieveActiveScene();
+	int getLevelSceneNum();
 
 private:
 	//set constructor to private
@@ -61,6 +64,7 @@ private:
 	TileMap mapEnvinronment;
 
 	string activeScene;
+	int levelNumber = 0;
 	
 };
 

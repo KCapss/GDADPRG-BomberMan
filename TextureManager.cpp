@@ -27,6 +27,9 @@ void TextureManager::loadAll()
 
 	//
 	loadTexture("powerUp-1", "Media/Assets/Objects/PowerUp/AddBomb.png");
+	loadTexture("powerUp-2", "Media/Assets/Objects/PowerUp/Power.png");
+	loadTexture("powerUp-3", "Media/Assets/Objects/PowerUp/Speed.png");
+
 	loadTexture("Door", "Media/Assets/Objects/PowerUp/Door.png");
 	
 
@@ -43,6 +46,7 @@ void TextureManager::loadAll()
 	loadTexture("ui_bar", "Media/Assets/UI/gray_flat.png");
 	sf::Texture* ui_bar = getTexture("ui_bar");
 	ui_bar->setRepeated(true);
+
 	loadTexture("btn_normal", "Media/Assets/UI/offRed_button11.png");
 	loadTexture("btn_pressed", "Media/Assets/UI/onRed_button13.png");
 

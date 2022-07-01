@@ -65,9 +65,10 @@ void GameOverScreen::initialize()
 void GameOverScreen::update(sf::Time deltaTime)
 {
 	
-	if (!PlayerState::getInstance()->isPlayerAlive()) {
+	if (!PlayerState::getInstance()->isPlayerAlive() && !this->isEnabled()) {
 		this->setEnabled(true);
 		ApplicationManager::getInstance()->pauseApplication();
+		cout << "Reset Buttonn" << endl;
 	}
 }
 

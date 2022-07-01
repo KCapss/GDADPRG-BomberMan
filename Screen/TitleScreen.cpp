@@ -70,9 +70,22 @@ void TitleScreen::initialize()
 	this->playTxt->setText("Play");
 	this->playBtn->setButtonListener(this);
 
+	this->levelBtn = new UIButton("level_Btn", btnNormal, btnPressed);
+	this->attachChild(this->levelBtn);
+	this->levelBtn->setPosition(0, Game::GAME_WINDOW_WIDTH / 4.5f);
+	this->levelBtn->getTransformable()->setScale(1.6f, 1.6f);
+
+	this->levelTxt = new UIText("text_2");
+	this->levelBtn->attachChild(this->levelTxt);
+	this->levelTxt->setPosition(1, -5);
+	this->levelTxt->setSize(20);
+	this->levelTxt->setText("Level Select");
+	this->levelBtn->setButtonListener(this);
+
+
 	this->quitBtn = new UIButton("quit_btn", btnNormal, btnPressed);
 	this->attachChild(this->quitBtn);
-	this->quitBtn->setPosition(0, Game::GAME_WINDOW_WIDTH / 4);
+	this->quitBtn->setPosition(0, Game::GAME_WINDOW_WIDTH / 3.f);
 	this->quitBtn->getTransformable()->setScale(1.6f, 1.6f);
 
 	this->quitTxt = new UIText("text_2");
@@ -87,7 +100,9 @@ void TitleScreen::initialize()
 void TitleScreen::onButtonClick(UIButton* button)
 {
 	if (button->getName() == "Play_btn")
-		SceneManager::getInstance()->loadScene(GAME_SCENE_NAME);
+		SceneManager::getInstance()->loadScene("Level_1");
+	else if (button->getName() == "level_Btn")
+		SceneManager::getInstance()->loadScene("LevelSelect");
 	else if (button->getName() == "quit_btn")
 		ApplicationManager::getInstance()->applicationQuit();
 

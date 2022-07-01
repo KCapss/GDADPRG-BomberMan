@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "Level2Scene.h"
 #include "SceneManager.h"
 
 
@@ -40,28 +40,28 @@
 #include "../GameObjectManager.h"
 
 
-GameScene::GameScene(): AScene(GAME_SCENE_NAME)
+Level2Scene::Level2Scene() : AScene("Level_2")
 {
 
 }
 
-GameScene::~GameScene()
+Level2Scene::~Level2Scene()
 {
 }
 
-void GameScene::onLoadResources()
+void Level2Scene::onLoadResources()
 {
 }
 
-void GameScene::onLoadObjects()
+void Level2Scene::onLoadObjects()
 {
 
 	//Level Setup
-	PlayerState::getInstance()->setActivePowerUp(PowerUPType::IncreaseBombCount);
-	PlayerState::getInstance()->setEnemCount(3);
+	PlayerState::getInstance()->setActivePowerUp(PowerUPType::PowerIncrease);
+	PlayerState::getInstance()->setEnemCount(5);
 	PlayerState::getInstance()->setAliveState(true);
 
-	TileMapState::getInstance()->setLevelScene(1);
+	TileMapState::getInstance()->setLevelScene(2);
 
 
 	//Physics
@@ -85,18 +85,18 @@ void GameScene::onLoadObjects()
 	GameObjectManager::getInstance()->addObject(door);
 
 	EmptyGameObject* powerUpManager = new EmptyGameObject("PowerUpManager");
-	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner (1, "PowerUpSpawner", "IncreaseBombCount", powerUpManager);
+	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner(1, "PowerUpSpawner", "PowerIncrease", powerUpManager);
 
 	powerUpManager->attachComponent(powerUpSpawner);
 	GameObjectManager::getInstance()->addObject(powerUpManager);
 
-	
+
 	//this->powerUPPool->requestPoolable();
 
 
 	//Box Spawning
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(35, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(45, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
@@ -105,7 +105,7 @@ void GameScene::onLoadObjects()
 	EmptyGameObject* bombSpawner = new EmptyGameObject("BombSpawner");
 	GameObjectManager::getInstance()->addObject(bombSpawner);
 
-		//BombObject
+	//BombObject
 	this->bombPool = new GameObjectPool
 	(ObjectPoolHolder::PROJECT_POOL_TAG,
 		new BombObject("projectile"),
@@ -115,7 +115,7 @@ void GameScene::onLoadObjects()
 	this->bombPool->initialize();
 	ObjectPoolHolder::getInstance()->registerObjectPool(bombPool);
 
-		//VFX
+	//VFX
 	EmptyGameObject* VFXBombSpawner = new EmptyGameObject("VFXBombSpawner");
 	GameObjectManager::getInstance()->addObject(VFXBombSpawner);
 
@@ -143,10 +143,10 @@ void GameScene::onLoadObjects()
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);
 	player->setPosition((64.0f) + 32.0f, (64.0f * 2.f) + 32.0f);
-	
 
 
-	
+
+
 
 	//HUD
 	HUD* hudMenu = new HUD("HUDMenu");
@@ -157,12 +157,12 @@ void GameScene::onLoadObjects()
 
 	GameOverScreen* gameOverMenu = new GameOverScreen("GameOver");
 	GameObjectManager::getInstance()->addObject(gameOverMenu);
-	
 
-	
+
+
 }
 
-void GameScene::onUnloadResources()
+void Level2Scene::onUnloadResources()
 {
 	//Unload Pool
 	GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);

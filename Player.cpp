@@ -58,6 +58,8 @@ void Player::initialize()
 	PhysicsManager::getInstance()->trackObject(this->collider);
 	PathManager::getInstance()->trackObject(this->collider);
 
+	
+
 }
 
 

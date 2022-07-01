@@ -186,7 +186,7 @@ bool PathManager::predictMovement(Collider* collider, int direction, int objType
 
                 if (bounds.intersects(wallBounds)) {
                     if (wallTrackObject[i]->alreadyCollided() && collider->getName() == "Player") {
-                        cout << "pass through" << endl;
+                        //cout << "pass through" << endl;
                         return true;
                     }
 
@@ -198,7 +198,7 @@ bool PathManager::predictMovement(Collider* collider, int direction, int objType
                     if (collider->getName() == "Player") {
                         wallTrackObject[i]->setAlreadyCollided(false);
                         wallTrackObject[i]->setChecked(false);
-                        cout << "Disable " << endl;
+                        //cout << "Disable " << endl;
                     }
                     return true;
                 }

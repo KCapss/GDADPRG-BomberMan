@@ -287,7 +287,7 @@ void TileMapState::registerExplosion(sf::Vector2f Pos, int direction, int count)
 			/*cout << "Name : " << this->mapLayout[key]->getName() << endl;*/
 			
 			if (this->mapLayout[key]->getName() == "Box") {
-				cout << this->mapLayout[key]->getName() << endl;
+				//cout << this->mapLayout[key]->getName() << endl;
 			}
 
 			else if (this->mapLayout[key]->getName() == "projectile") {
@@ -326,7 +326,7 @@ bool TileMapState::validTile(sf::Vector2f Pos)
 {
 	string key = this->convertString(Pos);
 	if (this->mapLayout[key] == NULL) {
-		std::cout << "This Pos dows not exist" << std::endl;
+		/*std::cout << "This Pos dows not exist" << std::endl;*/
 		return false;
 	}
 	/*std::cout << "This Pos is not missing for name: " << 
@@ -379,9 +379,19 @@ void TileMapState::setActiveScene(string sceneName)
 	this->activeScene = sceneName;
 }
 
+void TileMapState::setLevelScene(int levelNum)
+{
+	this->levelNumber = levelNum;
+}
+
 string TileMapState::retrieveActiveScene()
 {
 	return this->activeScene;
+}
+
+int TileMapState::getLevelSceneNum()
+{
+	return this->levelNumber;
 }
 
 

@@ -62,10 +62,17 @@ void DoorObject::onCollisionEnter(AGameObject* contact)
 		
 		
 		//Generate Different Level
-		//cout << " you win" << endl;
-		SceneManager::getInstance()->loadScene(
-			TileMapState::getInstance()->retrieveActiveScene()
-		);
+		int levelNum = TileMapState::getInstance()->getLevelSceneNum();
+
+		if (levelNum >= 3) {
+			SceneManager::getInstance()->loadScene( "TitleScene");
+		}
+		else {
+			SceneManager::getInstance()->loadScene( "Level_" + to_string(levelNum + 1));
+		}
+		
+
+		
 	//
 	}
 }

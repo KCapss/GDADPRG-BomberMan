@@ -25,7 +25,7 @@ void BombVFX::initialize()
 	sprite->setTexture(*TextureManager::getInstance()->getTexture("bombVFX"));
 	sf::Vector2u textureSize = sprite->getTexture()->getSize();
 	sprite->setOrigin(textureSize.x/2, textureSize.y/2);
-	sprite->setScale(0.6f, 0.6f);
+	sprite->setScale(0.45f, 0.45f);
 
 
 	Renderer* renderer = new Renderer("BombVFX");

@@ -104,18 +104,18 @@ void PowerUpObject::setupSprite(PowerUPType type)
 
     else if (type == PowerUPType::PowerIncrease) {
         //Option 2
-        sprite->setTexture(*TextureManager::getInstance()->getTexture("bombCrate"));
+        sprite->setTexture(*TextureManager::getInstance()->getTexture("powerUp-2"));
     }
 
     else  if (type == PowerUPType::IncreasSpeed) {
         //Option 3
-        sprite->setTexture(*TextureManager::getInstance()->getTexture("bombCrate"));
+        sprite->setTexture(*TextureManager::getInstance()->getTexture("powerUp-3"));
     }
 
-    else if (type == PowerUPType::Detonator) {
-        //Option 4
-        sprite->setTexture(*TextureManager::getInstance()->getTexture("bombCrate"));
-    }
+    //else if (type == PowerUPType::Detonator) {
+    //    //Option 4
+    //    sprite->setTexture(*TextureManager::getInstance()->getTexture("bombCrate"));
+    //}
 }
 
 

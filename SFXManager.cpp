@@ -24,11 +24,10 @@ void SFXManager::loadAll()
 	//Object Spawning
 	loadSoundBuffer("explode", "Media/Assets/SFX/BombExplosion.ogg");
 	loadSoundBuffer("placeBombs", "Media/Assets/SFX/BombPlacement.ogg");
+	
 
-	//VFX or 
-
-	//UI
-
+	//VFX or UI
+	loadSoundBuffer("click", "Media/Assets/SFX/mouseClick.ogg");
 
 
 }

@@ -39,7 +39,9 @@ void TextureManager::loadAll()
 
 	//load UI
 	loadTexture("ui_bg", "Media/Assets/UI/green_panel.png");
-	loadTexture("ui_bar", "Media/bar_1.png");
+	loadTexture("ui_bar", "Media/Assets/UI/gray_flat.png");
+	sf::Texture* ui_bar = getTexture("ui_bar");
+	ui_bar->setRepeated(true);
 	loadTexture("btn_normal", "Media/Assets/UI/offRed_button11.png");
 	loadTexture("btn_pressed", "Media/Assets/UI/onRed_button13.png");
 

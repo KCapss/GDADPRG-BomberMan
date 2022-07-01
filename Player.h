@@ -22,6 +22,7 @@ public:
 	//Setter
 	void changeOrientation(ObjectFacing playerOrientation);
 	void changeBlockStatus(bool flag);
+	void incrementSpeed(float speed);
 
 	//Getter
 	ObjectFacing retrieveOrientation();

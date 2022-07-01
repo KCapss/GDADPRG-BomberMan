@@ -52,8 +52,10 @@ void GameScene::onLoadResources()
 
 void GameScene::onLoadObjects()
 {
+
 	//Level Setup
 	PlayerState::getInstance()->setActivePowerUp(PowerUPType::IncreaseBombCount);
+	PlayerState::getInstance()->setEnemCount(5);
 
 
 	//Physics
@@ -85,7 +87,7 @@ void GameScene::onLoadObjects()
 
 	//Box Spawning
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(20, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(40, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
@@ -119,8 +121,10 @@ void GameScene::onLoadObjects()
 
 
 	//Enemy
+	int enemCount = PlayerState::getInstance()->retrieveEnemCount();
+
 	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
-	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(3, "EnemySpawner", enemiesManager);
+	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(enemCount, "EnemySpawner", enemiesManager);
 
 	enemiesManager->attachComponent(enemySpawner);
 	GameObjectManager::getInstance()->addObject(enemiesManager);

@@ -40,7 +40,7 @@ Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Ke
 
 	//load first scene
 	//SceneManager::getInstance()->loadScene(GAME_SCENE_NAME);
-	SceneManager::getInstance()->loadScene("GameScene");
+	SceneManager::getInstance()->loadScene("TitleScene");
 	
 	
 	

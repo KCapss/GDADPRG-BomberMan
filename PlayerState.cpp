@@ -57,6 +57,11 @@ void PlayerState::incrementMaxRange()
 	this->maxRange++;
 }
 
+void PlayerState::setEnemCount(int count)
+{
+	this->enemRemains = count;
+}
+
 void PlayerState::incrementEnemCount(int count)
 {
 	this->enemRemains += count;

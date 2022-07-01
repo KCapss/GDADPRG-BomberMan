@@ -25,8 +25,8 @@ void EnemySpawnHandler::perform()
 {
 	GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);	
 	if (maxCount > count) {
-		enemyPool->requestPoolable();
-		count++;
+		enemyPool->requestPoolableBatch(maxCount);
+		count += maxCount;
 	}
 	
 	

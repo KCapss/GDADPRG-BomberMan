@@ -33,6 +33,7 @@ public:
 	void incrementBombCount();
 	void incrementMaxRange();
 
+	void setEnemCount(int count);
 	void incrementEnemCount(int count);
 	void incrementScore(int score);
 

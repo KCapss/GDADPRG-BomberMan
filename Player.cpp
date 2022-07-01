@@ -62,6 +62,11 @@ void Player::changeBlockStatus(bool flag)
 	
 }
 
+void Player::incrementSpeed(float speed)
+{
+	this->SPEED_MULLTIPLIER += speed;
+}
+
 ObjectFacing Player::retrieveOrientation()
 {
 	return this->playerOrientation;
@@ -109,6 +114,7 @@ void Player::onCollisionEnter(AGameObject* contact)
 
 	if (contact->getName().find("IncreasSpeed") != std::string::npos) {
 		
+		this->incrementSpeed(100.0f);
 		cout << " you hit PowerUPSpeed" << endl;
 	}
 

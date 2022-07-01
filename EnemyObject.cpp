@@ -6,6 +6,7 @@
 #include "GameObjectManager.h"
 #include "TileMapState.h"
 #include "Physics/PathManager.h"
+#include "PlayerState.h"
 
 
 //Component
@@ -73,6 +74,11 @@ void EnemyObject::onCollisionEnter(AGameObject* contact)
 {
     
     if (contact->getName().find("VFX") != std::string::npos) {
+
+        PlayerState::getInstance()->incrementEnemCount(-1);
+        PlayerState::getInstance()->incrementScore(200);
+        //Create Classifier for different enemy type
+
         GameObjectPool* enemPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);
         enemPool->releasePoolable((APoolable*)this);
     }

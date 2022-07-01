@@ -18,9 +18,27 @@ public:
 
     void onButtonClick(UIButton* button);
     void onButtonReleased(UIButton* button);
+
+    //create updateFunction
+    void update(sf::Time deltaTime);
+    
 private:
+    //Button
     UIButton* button_1;
     UIText* button_1Text;
+
+    //Display
+    UIText* time_Text;
+    UIText* enemRemain_Text;
+    UIText* Score_Text;
+
+    float time;
+    int remain = 0;
+    int Score = 0;
+
+    //Variable
+    
+
 
 };
 

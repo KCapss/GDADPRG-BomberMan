@@ -84,20 +84,16 @@ float Player::retrieveSpeed()
 
 void Player::onCollisionEnter(AGameObject* contact)
 {
-	//if (contact->getName().find("Wall") != std::string::npos) {
-	//	this->isBlocked = true;
-	//	//cout << "Collision Detected" << endl;
-	//}
-
-	//cout << " you died" << endl;
-	//cout << "Collision Monster with " << contact->getName() << endl;
+	
 
 	if (contact->getName().find("enemy") != std::string::npos) {
-		cout << " you died" << endl;
+		//cout << " you died" << endl;
+
+		PlayerState::getInstance()->setAliveState(false);
 	}
 
 	if (contact->getName().find("VFX") != std::string::npos) {
-		cout << " you died" << endl;
+		PlayerState::getInstance()->setAliveState(false);
 	}
 
 

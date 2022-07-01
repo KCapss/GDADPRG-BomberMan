@@ -43,6 +43,10 @@ public:
 	sf::Vector2f onInitiateExplotion();
 	int availableExplotion();
 
+	//Scene
+	void setActiveScene(string sceneName);
+	string retrieveActiveScene();
+
 private:
 	//set constructor to private
 	TileMapState() {};
@@ -55,6 +59,8 @@ private:
 	TileState* tileState;
 	std::unordered_map <std::string, TileState*> mapLayout;
 	TileMap mapEnvinronment;
+
+	string activeScene;
 	
 };
 

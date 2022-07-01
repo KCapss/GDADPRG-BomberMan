@@ -375,4 +375,14 @@ int TileMapState::availableExplotion()
 	return count;
 }
 
+void TileMapState::setActiveScene(string sceneName)
+{
+	this->activeScene = sceneName;
+}
+
+string TileMapState::retrieveActiveScene()
+{
+	return this->activeScene;
+}
+
 

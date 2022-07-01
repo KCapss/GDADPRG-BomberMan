@@ -47,6 +47,11 @@ int PlayerState::retrieveScore()
 	return this->score;
 }
 
+bool PlayerState::isPlayerAlive()
+{
+	return this->isAlive;
+}
+
 void PlayerState::incrementBombCount()
 {
 	this->maxBombCount++;
@@ -72,6 +77,11 @@ void PlayerState::incrementScore(int score)
 	this->score += score;
 }
 
+void PlayerState::setAliveState(bool flag)
+{
+	this->isAlive = flag;
+}
+
 void PlayerState::setActivePowerUp(PowerUPType type)
 {
 	this->levelPowerUP = type;
@@ -86,6 +96,8 @@ void PlayerState::resetLevel()
 {
 	this->maxBombCount = 1;
 	this->maxRange = 1;
+
+	this->isAlive = true;
 }
 
 

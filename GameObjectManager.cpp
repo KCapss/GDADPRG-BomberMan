@@ -1,5 +1,6 @@
 #include "GameObjectManager.h"
 #include "Manager/ApplicationManager.h"
+#include "PlayerState.h"
 #include <iostream>
 
 GameObjectManager* GameObjectManager::sharedInstance = NULL;
@@ -40,8 +41,11 @@ void GameObjectManager::processInput(sf::Event event)
 		if (gameObjectList[i] != this->findObjectByName("MainMenu"))
 			gameObjectList[i]->processInput(event);
 
-		else if (ApplicationManager::getInstance()->isPaused())
+		else if (ApplicationManager::getInstance()->isPaused() && PlayerState::getInstance()->isPlayerAlive())
 			this->findObjectByName("MainMenu")->processInput(event);
+
+		else if (ApplicationManager::getInstance()->isPaused() )
+			this->findObjectByName("GameOver")->processInput(event);
 	}
 }
 
@@ -51,8 +55,11 @@ void GameObjectManager::update(sf::Time deltaTime)
 		if (gameObjectList[i] != this->findObjectByName("MainMenu"))
 			gameObjectList[i]->update(deltaTime);
 
-		else if (ApplicationManager::getInstance()->isPaused())
+		else if (ApplicationManager::getInstance()->isPaused() && PlayerState::getInstance()->isPlayerAlive())
 			this->findObjectByName("MainMenu")->update(deltaTime);
+
+		else if (ApplicationManager::getInstance()->isPaused())
+			this->findObjectByName("GameOver")->update(deltaTime);
 	}
 }
 
@@ -62,8 +69,11 @@ void GameObjectManager::draw(sf::RenderWindow* window)
 		if (gameObjectList[i] != this->findObjectByName("MainMenu"))
 			gameObjectList[i]->draw(window, sf::RenderStates::Default);
 
-		else if (ApplicationManager::getInstance()->isPaused())
+		else if (ApplicationManager::getInstance()->isPaused() && PlayerState::getInstance()->isPlayerAlive())
 			this->findObjectByName("MainMenu")->draw(window, sf::RenderStates::Default);
+
+		else if (ApplicationManager::getInstance()->isPaused())
+			this->findObjectByName("GameOver")->draw(window, sf::RenderStates::Default);
 	}
 }
 

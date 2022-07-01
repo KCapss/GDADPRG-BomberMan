@@ -20,6 +20,7 @@
 //All UI
 #include "../Screen/HUD.h"
 #include "../Screen/MainMenuScreen.h"
+#include "../Screen/GameOverScreen.h"
 
 //AllComponent
 #include "../Component/BoxSpawner.h"
@@ -145,6 +146,9 @@ void GameScene::onLoadObjects()
 
 	MainMenuScreen* mainMenu = new MainMenuScreen("MainMenu");
 	GameObjectManager::getInstance()->addObject(mainMenu);
+
+	GameOverScreen* gameOverMenu = new GameOverScreen("GameOver");
+	GameObjectManager::getInstance()->addObject(gameOverMenu);
 	
 
 	

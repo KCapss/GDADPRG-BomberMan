@@ -29,6 +29,8 @@ public:
 	int retrieveEnemCount();
 	int retrieveScore();
 
+	bool isPlayerAlive();
+
 	//Setter
 	void incrementBombCount();
 	void incrementMaxRange();
@@ -36,6 +38,8 @@ public:
 	void setEnemCount(int count);
 	void incrementEnemCount(int count);
 	void incrementScore(int score);
+
+	void setAliveState(bool flag);
 
 	//Power Up
 	void setActivePowerUp(PowerUPType type);
@@ -53,6 +57,7 @@ private:
 	static PlayerState* sharedInstance;
 
 	sf::Vector2f playerPos = sf::Vector2f(0, 0);
+	bool isAlive = true;
 
 	//Player Properties
 	int maxBombCount = 1;

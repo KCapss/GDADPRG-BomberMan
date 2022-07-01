@@ -82,7 +82,6 @@ void TitleScreen::initialize()
 	this->quitTxt->setText("Quit");
 	this->quitBtn->setButtonListener(this);
 
-	this->setEnabled(false);
 }
 
 void TitleScreen::onButtonClick(UIButton* button)

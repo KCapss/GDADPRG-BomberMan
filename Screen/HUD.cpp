@@ -104,8 +104,13 @@ void HUD::update(sf::Time deltaTime)
 	Score = PlayerState::getInstance()->retrieveScore();
 	remain = PlayerState::getInstance()->retrieveEnemCount();
 
+
 	this->Score_Text->setText("Score: " + to_string(Score));
 	this->enemRemain_Text->setText("Remain: " + to_string(remain));
 	this->time_Text->setText("Time: " + to_string((int)time));
+
+	if (time < 0) {
+		PlayerState::getInstance()->setAliveState(false);
+	}
 
 }

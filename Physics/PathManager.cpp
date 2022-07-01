@@ -1,5 +1,6 @@
 #include "PathManager.h"
 #include "../Player.h"
+#include "../EnemyObject.h"
 #include "../BombVFX.h"
 #include <iostream>
 #include <cmath>
@@ -46,6 +47,8 @@ void PathManager::trackWallObject(Collider* object)
 {
     object->setAlreadyCollided(false);
     this->wallTrackObject.push_back(object);
+
+   
 }
 
 void PathManager::untrackWallObject(Collider* object)
@@ -100,22 +103,30 @@ void PathManager::operate()
     //this->cleanUpObjects();
 }
 
-bool PathManager::predictMovement(Collider* collider, int direction)
+bool PathManager::predictMovement(Collider* collider, int direction, int objType)
 {
     //ObjPropeties
-    Player* player = (Player*)collider->getOwner();
-   
-    
-
-    //Sprite ProperTies
+    Player* player;
+    EnemyObject* enemy;
+    float speed = 0;
     sf::FloatRect bounds = collider->getGlobalBounds();
-    //sf::Vector2u textureSize = s
-    //player->getTransformable()
+
+    if (objType == ObjectTypes::Character) {
+        player = (Player*)collider->getOwner();
+        speed = player->retrieveSpeed() * deltaTime.asSeconds();
+    }
+
+    else {
+        enemy = (EnemyObject*)collider->getOwner();
+        speed = enemy->retrieveSpeed() * deltaTime.asSeconds();
+        //cout << "No Character choice yet" << endl;
+    }
+
 
    
     sf::Vector2f offset = sf::Vector2f(0, 0);
-    if (direction == PlayerFacing::playerUp) {
-        offset.y -= player->retrieveSpeed() * deltaTime.asSeconds();
+    if (direction == ObjectFacing::lookUp) {
+        offset.y -= speed;
 
         bounds = sf::FloatRect(bounds.left ,
             bounds.top + offset.y,
@@ -123,8 +134,8 @@ bool PathManager::predictMovement(Collider* collider, int direction)
             bounds.height);
     }
 
-    else if (direction == PlayerFacing::playerDown) {
-        offset.y += player->retrieveSpeed() * deltaTime.asSeconds();
+    else if (direction == ObjectFacing::lookDown) {
+        offset.y += speed;
 
         bounds = sf::FloatRect(bounds.left,
             bounds.top + offset.y,
@@ -132,8 +143,8 @@ bool PathManager::predictMovement(Collider* collider, int direction)
             bounds.height);
     }
 
-    else if (direction == PlayerFacing::playerLeft) {
-        offset.x -= player->retrieveSpeed() * deltaTime.asSeconds();
+    else if (direction == ObjectFacing::lookLeft) {
+        offset.x -= speed;
 
         bounds = sf::FloatRect(bounds.left + offset.x,
             bounds.top,
@@ -141,8 +152,8 @@ bool PathManager::predictMovement(Collider* collider, int direction)
             bounds.height);
     }
 
-    else if (direction == PlayerFacing::playerRight) {
-        offset.x += player->retrieveSpeed() * deltaTime.asSeconds();
+    else if (direction == ObjectFacing::lookRight) {
+        offset.x += speed;
 
         bounds = sf::FloatRect(bounds.left + offset.x,
             bounds.top,
@@ -165,21 +176,53 @@ bool PathManager::predictMovement(Collider* collider, int direction)
 
         //for bomb
         if (wallTrackObject[i]->getName() == "BombCollider") {
-            if (bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
-                return true;
+           
+            
+            /*bounds = sf::FloatRect(bounds.left,
+                bounds.top,
+                bounds.width + 3.0f ,
+                bounds.height + 3.0f);*/
+            if (wallTrackObject[i]->isChecked()) {
 
-            else if(!bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
-            {
-                wallTrackObject[i]->setAlreadyCollided(false);
-                return true;
+                if (bounds.intersects(wallBounds)) {
+                    if (wallTrackObject[i]->alreadyCollided() && collider->getName() == "Player") {
+                        //cout << "pass through" << endl;
+                        return true;
+                    }
+
+                }
+
+
+                else if (!bounds.intersects(wallBounds) && wallTrackObject[i]->alreadyCollided())
+                {
+                    if (collider->getName() == "Player") {
+                        wallTrackObject[i]->setAlreadyCollided(false);
+                        wallTrackObject[i]->setChecked(false);
+                        //cout << "Disable " << endl;
+                    }
+                    return true;
+                }
+
+                return false;
+           }
+
+            if (!wallTrackObject[i]->isChecked()) {
+
+                if (wallTrackObject[i]->isChecked()) {
+
+                    if (bounds.intersects(wallBounds)) {
+                        return false;
+
+                    }
+
+                    else if (!bounds.intersects(wallBounds) && !wallTrackObject[i]->alreadyCollided())
+                    {
+                        return true;
+                    }
+
+                }
             }
 
-            else if (!bounds.intersects(wallBounds) && !wallTrackObject[i]->alreadyCollided())
-            {
-                return true;
-            }
-
-            return false;
         }
 
         
@@ -192,6 +235,8 @@ bool PathManager::predictMovement(Collider* collider, int direction)
         << " y: " << bounds.top << endl;*/
     return true;
 }
+
+
 
 bool PathManager::collidedPath(sf::FloatRect A, sf::FloatRect B)
 {

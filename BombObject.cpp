@@ -8,6 +8,7 @@
 #include "GameObjectManager.h"
 #include "TileMapState.h"
 #include "Physics/PathManager.h"
+#include "SFXManager.h"
 
 
 //Component
@@ -53,22 +54,29 @@ void BombObject::initialize()
     collider->setCollisionListener(this);
     this->attachComponent(collider);
 
-    this->movementCollider = new Collider("hitBoxCollider");
+    /*this->movementCollider = new Collider("hitBoxCollider");
 
     movementCollider->setLocalBounds(sprite->getGlobalBounds());
     movementCollider->setCollisionListener(this);
-    this->attachComponent(movementCollider);
+    this->attachComponent(movementCollider);*/
 }
 
 void BombObject::onRelease()
 {
     PathManager::getInstance()->untrackWallObject(this->collider);
     TileMapState::getInstance()->unRegisterPosition(tempPosition);
-    PhysicsManager::getInstance()->untrackObject(this->movementCollider);
+    PhysicsManager::getInstance()->untrackObject(this->collider);
 }
 
 void BombObject::onActivate()
 {
+
+    //SFX
+    sf::Sound* sound = new sf::Sound();
+    sound->setBuffer(*SFXManager::getInstance()->getSoundBuffer("placeBombs"));
+    sound->play();
+    
+    //Location
     Player* player = (Player*)GameObjectManager::getInstance()->findObjectByName("Player");
     sf::Vector2f position = player->getTransformable()->getPosition();
 
@@ -79,11 +87,16 @@ void BombObject::onActivate()
     //Create the placeholder the position:
     this->tempPosition = position;
 
+    
+
     PathManager::getInstance()->trackWallObject(this->collider);
-    PhysicsManager::getInstance()->trackObject(this->movementCollider);
+    PhysicsManager::getInstance()->trackObject(this->collider);
     TileMapState::getInstance()->registerPosition(position, this->name);
     
     this->collider->setAlreadyCollided(true); //Assume the bomb is under the player
+    this->collider->setChecked(true); //Assume the bomb is under the player
+    
+    //this->collider->setAlreadyCollided(true)
     
 }
 

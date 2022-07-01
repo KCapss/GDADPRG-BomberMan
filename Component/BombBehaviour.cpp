@@ -1,10 +1,16 @@
 #include "BombBehaviour.h"
 #include "../AGameObject.h"
+
 #include "../ObjectPooling/ObjectPoolHolder.h"
+
 #include "../TextureManager.h"
 #include "../TileMapState.h"
 #include "../PlayerState.h"
+#include "../SFXManager.h"
+
 #include "../BombObject.h"
+#include "../GameObjectManager.h"
+#include "../Player.h"
 BombBehaviour::BombBehaviour(string name): AComponent(name, Script)
 {
 }
@@ -14,10 +20,16 @@ void BombBehaviour::perform()
 	BombObject* bomb = (BombObject*)this->getOwner();
 	this->ticks += this->deltaTime.asSeconds();
 
-	if (this->ticks > 3.0f || bomb->hitConfirmed()) {
+	if (this->ticks > timer || bomb->hitConfirmed()) {
 		reset();
-		//Do some action
 
+		//Load SFX
+		sf::Sound* sound = new sf::Sound();
+		sound->setBuffer(*SFXManager::getInstance()->getSoundBuffer("explode"));
+		sound->play();
+
+
+		//Do Action
 		int maxRange = PlayerState::getInstance()->retrieveMaxRange();
 		int vfxTileCount = (maxRange * 4) + 1;
 
@@ -28,7 +40,7 @@ void BombBehaviour::perform()
 		}
 
 		int availableSpots = TileMapState::getInstance()->availableExplotion();
-		cout << "Available Spots: " << availableSpots << endl;
+		
 
 		this->bombVFXPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::VFX_POOL_TAG);
 		for (int i = 0; i < availableSpots; i++) {
@@ -38,6 +50,9 @@ void BombBehaviour::perform()
 		GameObjectPool* bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
 		bombPool->releasePoolable((APoolable*)this->getOwner());
 
+
+		Player* player = (Player*)GameObjectManager::getInstance()->findObjectByName("Player");
+		player->incrementBombUsedCount(-1);
 		//RemoveObject
 
 	}

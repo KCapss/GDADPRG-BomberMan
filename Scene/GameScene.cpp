@@ -1,6 +1,8 @@
 #include "GameScene.h"
 #include "SceneManager.h"
 
+
+#include "../PlayerState.h"
 //All obj
 //#include "../BGObject.h"
 //#include "../AirplanePlayer.h"
@@ -11,18 +13,25 @@
 #include "../WallManager.h"
 #include "../BombObject.h"
 #include "../BombVFX.h"
+#include "../EnemyObject.h"
+#include "../DoorObject.h"
+
+
 
 //All UI
 #include "../Screen/HUD.h"
 #include "../Screen/MainMenuScreen.h"
+#include "../Screen/GameOverScreen.h"
 
 //AllComponent
 #include "../Component/BoxSpawner.h"
+#include "../Component/PowerUpSpawner.h"
+#include "../Component/EnemySpawnHandler.h"
 
 
 //AllPool
 #include "../ObjectPooling/ObjectPoolHolder.h"
-
+#include "../TileMapState.h"
 
 
 #include "../EmptyGameObject.h"
@@ -46,6 +55,15 @@ void GameScene::onLoadResources()
 
 void GameScene::onLoadObjects()
 {
+
+	//Level Setup
+	PlayerState::getInstance()->setActivePowerUp(PowerUPType::IncreaseBombCount);
+	PlayerState::getInstance()->setEnemCount(3);
+	PlayerState::getInstance()->setAliveState(true);
+
+	TileMapState::getInstance()->setLevelScene(1);
+
+
 	//Physics
 	EmptyGameObject* physicsManager = new EmptyGameObject("PhysicsManager");
 	this->registerObject(physicsManager);
@@ -56,12 +74,29 @@ void GameScene::onLoadObjects()
 	this->registerObject(pathManager);
 	PathManager::initialize("PathManager", pathManager);
 
+	//Wall
 	srand(time(NULL));
 	WallManager* walldesign = new WallManager("WallManage");
 	GameObjectManager::getInstance()->addObject(walldesign);
 
+	//PowerUp and Exit
+
+	DoorObject* door = new DoorObject("Door");
+	GameObjectManager::getInstance()->addObject(door);
+
+	EmptyGameObject* powerUpManager = new EmptyGameObject("PowerUpManager");
+	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner (1, "PowerUpSpawner", "IncreaseBombCount", powerUpManager);
+
+	powerUpManager->attachComponent(powerUpSpawner);
+	GameObjectManager::getInstance()->addObject(powerUpManager);
+
+	
+	//this->powerUPPool->requestPoolable();
+
+
+	//Box Spawning
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(55, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(35, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
@@ -74,7 +109,7 @@ void GameScene::onLoadObjects()
 	this->bombPool = new GameObjectPool
 	(ObjectPoolHolder::PROJECT_POOL_TAG,
 		new BombObject("projectile"),
-		3,
+		10,
 		bombSpawner);
 
 	this->bombPool->initialize();
@@ -87,12 +122,24 @@ void GameScene::onLoadObjects()
 	this->bombVFXPool = new GameObjectPool
 	(ObjectPoolHolder::VFX_POOL_TAG,
 		new BombVFX("VFX"),
-		30,
+		50,
 		VFXBombSpawner);
 
 	this->bombVFXPool->initialize();
 	ObjectPoolHolder::getInstance()->registerObjectPool(bombVFXPool);
 
+
+	//Enemy
+	int enemCount = PlayerState::getInstance()->retrieveEnemCount();
+
+	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
+	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(enemCount, "EnemySpawner", enemiesManager);
+
+	enemiesManager->attachComponent(enemySpawner);
+	GameObjectManager::getInstance()->addObject(enemiesManager);
+
+
+	//Player
 	Player* player = new Player("Player");
 	GameObjectManager::getInstance()->addObject(player);
 	player->setPosition((64.0f) + 32.0f, (64.0f * 2.f) + 32.0f);
@@ -101,12 +148,15 @@ void GameScene::onLoadObjects()
 
 	
 
-	
+	//HUD
 	HUD* hudMenu = new HUD("HUDMenu");
 	GameObjectManager::getInstance()->addObject(hudMenu);
 
 	MainMenuScreen* mainMenu = new MainMenuScreen("MainMenu");
 	GameObjectManager::getInstance()->addObject(mainMenu);
+
+	GameOverScreen* gameOverMenu = new GameOverScreen("GameOver");
+	GameObjectManager::getInstance()->addObject(gameOverMenu);
 	
 
 	
@@ -114,8 +164,21 @@ void GameScene::onLoadObjects()
 
 void GameScene::onUnloadResources()
 {
-	//GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);
-	//ObjectPoolHolder::getInstance()->unregisterObjectPool(enemyPool);
+	//Unload Pool
+	GameObjectPool* enemyPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::ENEMY_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(enemyPool);
+
+	GameObjectPool* bombPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::PROJECT_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(bombPool);
+
+	GameObjectPool* bombVFXPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::VFX_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(bombVFXPool);
+
+	GameObjectPool* boxPool = ObjectPoolHolder::getInstance()->getPool(ObjectPoolHolder::BOX_POOL_TAG);
+	ObjectPoolHolder::getInstance()->unregisterObjectPool(boxPool);
+
+	TileMapState::getInstance()->resetAll();
+
 	AScene::onUnloadObjects();
 }
 

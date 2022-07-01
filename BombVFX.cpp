@@ -25,7 +25,7 @@ void BombVFX::initialize()
 	sprite->setTexture(*TextureManager::getInstance()->getTexture("bombVFX"));
 	sf::Vector2u textureSize = sprite->getTexture()->getSize();
 	sprite->setOrigin(textureSize.x/2, textureSize.y/2);
-	sprite->setScale(0.8f, 0.8f);
+	sprite->setScale(0.45f, 0.45f);
 
 
 	Renderer* renderer = new Renderer("BombVFX");
@@ -51,6 +51,7 @@ void BombVFX::onActivate()
 	this->setPosition(tempPos.x, tempPos.y);
 
 	PhysicsManager::getInstance()->trackObject(this->collider);
+	//collider->setLocalBounds(sprite->getGlobalBounds());
 }
 
 APoolable* BombVFX::clone()
@@ -80,8 +81,12 @@ void BombVFX::update(sf::Time deltaTime)
 	}
 }
 
-void BombVFX::onCollisionEnter(AGameObject* contatct)
+void BombVFX::onCollisionEnter(AGameObject* contact)
 {
+	//cout << "Collided with: " << contact->getName() << endl;
+
+
+
 }
 
 void BombVFX::onCollisionExit(AGameObject* contact)

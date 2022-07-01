@@ -36,7 +36,7 @@ void PlayerInputController::perform()
 		break;
 	case sf::Keyboard::Space:
 		this->fire = keyflag;
-		break;
+		
 	}
 }
 

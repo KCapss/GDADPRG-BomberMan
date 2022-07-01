@@ -15,11 +15,22 @@ public:
     void onButtonReleased(UIButton* button);
 
 private:
+    //Button
     UIButton* playBtn;
     UIText* playTxt;
 
+    UIButton* levelBtn;
+    UIText* levelTxt;
+
     UIButton* quitBtn;
     UIText* quitTxt;
+    
+    //Title Name
+    UIText* titleNameTxt1;
+    UIText* titleNameTxt2;
+
+    //Author Name
+    UIText* authorText;
 
 };
 

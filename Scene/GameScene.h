@@ -18,6 +18,7 @@ public:
 private:
     GameObjectPool* bombPool;
     GameObjectPool* bombVFXPool;
+    GameObjectPool* powerUPPool;
 
 };
 

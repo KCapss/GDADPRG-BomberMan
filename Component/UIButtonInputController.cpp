@@ -1,5 +1,6 @@
 #include "UIButtonInputController.h"
 #include "../UI/UIButton.h"
+#include "../SFXManager.h"
 
 #include "SFML/System.hpp"
 #include <iostream>
@@ -37,6 +38,12 @@ void UIButtonInputController::perform()
 			this->pressed = true;
 			button->changeButtonToPressed();
 			this->buttonListener->onButtonClick(button);
+
+			//create sfx for Sound click
+			sf::Sound* sound = new sf::Sound();
+			sound->setBuffer(*SFXManager::getInstance()->getSoundBuffer("click"));
+			sound->play();
+			sound;
 		}
 	}
 }

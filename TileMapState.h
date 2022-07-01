@@ -16,6 +16,7 @@ class TileMapState: sf::NonCopyable
 public:
 	static TileMapState* getInstance();
 	void loadAll();
+	void resetAll();
 
 	void registerPosition(sf::Vector2f Pos, std::string name);
 	void unRegisterPosition(sf::Vector2f Pos);
@@ -25,6 +26,8 @@ public:
 
 	//Summon Randomizer
 	sf::Vector2f randomizeSpawn(string name);
+	bool spawnPriorities(string name);
+	sf::Vector2f lookSpawnPriorities(string name);
 	
 	//
 	sf::Vector2f findNearestNeighbor(sf::Vector2f pos);
@@ -40,6 +43,13 @@ public:
 	sf::Vector2f onInitiateExplotion();
 	int availableExplotion();
 
+	//Scene
+	void setActiveScene(string sceneName);
+	void setLevelScene(int levelNum);
+
+	string retrieveActiveScene();
+	int getLevelSceneNum();
+
 private:
 	//set constructor to private
 	TileMapState() {};
@@ -52,6 +62,9 @@ private:
 	TileState* tileState;
 	std::unordered_map <std::string, TileState*> mapLayout;
 	TileMap mapEnvinronment;
+
+	string activeScene;
+	int levelNumber = 0;
 	
 };
 

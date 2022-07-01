@@ -9,6 +9,7 @@
 #include "Manager/ApplicationManager.h"
 #include "TileMapState.h"
 #include "PlayerState.h"
+#include "SFXManager.h"
 
 
 #include "Screen/MainMenuScreen.h"
@@ -17,6 +18,12 @@
 
 #include "Scene/MainMenuScene.h"
 #include "Scene/TitleScene.h"
+#include "Scene/LevelSelectScene.h"
+#include "Scene/Level1Scene.h"
+#include "Scene/Level2Scene.h"
+#include "Scene/Level3Scene.h"
+
+
 #include "Scene/GameScene.h"
 
 #include "Scene/SceneManager.h"
@@ -30,15 +37,20 @@ Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Ke
 	ApplicationManager::getInstance()->initialize(&mWindow);
 	TileMapState::getInstance()->loadAll();
 	PlayerState::getInstance()->initialize();
+	SFXManager::getInstance()->loadAll();
 
 	//register scene
 	SceneManager::getInstance()->registerScene(new TitleScene());
-	SceneManager::getInstance()->registerScene(new GameScene());
+	SceneManager::getInstance()->registerScene(new LevelSelectScene());
 	SceneManager::getInstance()->registerScene(new MainMenuScene());
+	SceneManager::getInstance()->registerScene(new Level1Scene());
+	SceneManager::getInstance()->registerScene(new Level2Scene());
+	SceneManager::getInstance()->registerScene(new Level3Scene());
 
+	SceneManager::getInstance()->registerScene(new GameScene());
 	//load first scene
 	//SceneManager::getInstance()->loadScene(GAME_SCENE_NAME);
-	SceneManager::getInstance()->loadScene("GameScene");
+	SceneManager::getInstance()->loadScene("TitleScene");
 	
 	
 	

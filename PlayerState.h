@@ -3,6 +3,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+
+enum PowerUPType {
+	PowerIncrease = 0,
+	IncreaseBombCount = 1,
+	IncreasSpeed = 2,
+	Detonator = 3,
+};
+
 class PlayerState: sf::NonCopyable
 {
 
@@ -10,8 +18,9 @@ public:
 	static PlayerState* getInstance();
 	void initialize();
 
-	//initialize
-	
+	//Getter for Player
+	void updatePos(sf::Vector2f pos);
+	sf::Vector2f retrievePlayerPos();
 
 	//Getter Function
 	int retrieveMaxRange();
@@ -20,12 +29,23 @@ public:
 	int retrieveEnemCount();
 	int retrieveScore();
 
+	bool isPlayerAlive();
+
 	//Setter
 	void incrementBombCount();
 	void incrementMaxRange();
 
+	void setEnemCount(int count);
 	void incrementEnemCount(int count);
 	void incrementScore(int score);
+
+	void setAliveState(bool flag);
+
+	//Power Up
+	void setActivePowerUp(PowerUPType type);
+	PowerUPType retrieveActivePowerUPType();
+	
+
 
 	//Reset Level
 	void resetLevel();
@@ -35,6 +55,9 @@ private:
 	PlayerState() {};
 
 	static PlayerState* sharedInstance;
+
+	sf::Vector2f playerPos = sf::Vector2f(0, 0);
+	bool isAlive = true;
 
 	//Player Properties
 	int maxBombCount = 1;
@@ -47,7 +70,7 @@ private:
 	int enemRemains = 0;
 	int score = 0;
 
-
+	PowerUPType levelPowerUP = Detonator;
 
 };
 

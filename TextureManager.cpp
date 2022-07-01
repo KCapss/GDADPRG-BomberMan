@@ -18,10 +18,19 @@ void TextureManager::loadAll()
 {
 	
 	//load obj
-	loadTexture("bomberMan", "Media/Down_00.png");
+	loadTexture("bomberMan", "Media/Assets/Player/SpriteSheet/PlayerSheets.png");
 	loadTexture("defaultCrate", "Media/Assets/Objects/NonMovable/default_Crate.png");
-	loadTexture("bombCrate", "Media/Assets/Objects/NonMovable/wall1_crate_08.png");
-	loadTexture("bombVFX", "Media/Assets/Objects/NonMovable/wall2_crate_09.png");
+	loadTexture("bombCrate", "Media/Assets/Objects/Bombs/bomb.png");
+	loadTexture("bombVFX", "Media/Assets/Objects/Bombs/VFX/tile004.png");
+	loadTexture("enem_1", "Media/Assets/Enemies/All_Enemies/IdleAnimation/Enem1_Left-1.png");
+
+
+	//
+	loadTexture("powerUp-1", "Media/Assets/Objects/PowerUp/AddBomb.png");
+	loadTexture("powerUp-2", "Media/Assets/Objects/PowerUp/Power.png");
+	loadTexture("powerUp-3", "Media/Assets/Objects/PowerUp/Speed.png");
+
+	loadTexture("Door", "Media/Assets/Objects/PowerUp/Door.png");
 	
 
 	//BG Divider
@@ -34,7 +43,10 @@ void TextureManager::loadAll()
 
 	//load UI
 	loadTexture("ui_bg", "Media/Assets/UI/green_panel.png");
-	loadTexture("ui_bar", "Media/bar_1.png");
+	loadTexture("ui_bar", "Media/Assets/UI/gray_flat.png");
+	sf::Texture* ui_bar = getTexture("ui_bar");
+	ui_bar->setRepeated(true);
+
 	loadTexture("btn_normal", "Media/Assets/UI/offRed_button11.png");
 	loadTexture("btn_pressed", "Media/Assets/UI/onRed_button13.png");
 

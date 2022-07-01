@@ -72,7 +72,7 @@ void Wall::initialize()
 
 
 // Attach Component
-	if (wallType != WallTypes::Ground && wallType == WallTypes::Center) {
+	if (wallType != WallTypes::Ground) {
 
 		this->collider = new Collider("Wall");
 		collider->setLocalBounds(sprite->getGlobalBounds());

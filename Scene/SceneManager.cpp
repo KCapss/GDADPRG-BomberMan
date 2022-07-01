@@ -1,4 +1,5 @@
 #include "SceneManager.h"
+#include "../TileMapState.h"
 #include <iostream>
 
 SceneManager* SceneManager::sharedInstance = NULL;
@@ -22,6 +23,7 @@ void SceneManager::loadScene(std::string name)
 {
     this->isLoading = true;
     this->toLoadSceneName = name;
+    TileMapState::getInstance()->setActiveScene(name);
 }
 
 void SceneManager::checkLoadScene()

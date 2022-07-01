@@ -48,7 +48,7 @@ void PathManager::trackWallObject(Collider* object)
     object->setAlreadyCollided(false);
     this->wallTrackObject.push_back(object);
 
-    cout << "Size: " << wallTrackObject.size() << "Name: " << object->getName() << endl;
+   
 }
 
 void PathManager::untrackWallObject(Collider* object)

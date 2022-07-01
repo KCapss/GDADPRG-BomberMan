@@ -18,7 +18,7 @@ void TextureManager::loadAll()
 {
 	
 	//load obj
-	loadTexture("bomberMan", "Media/Down_00.png");
+	loadTexture("bomberMan", "Media/Assets/Player/SpriteSheet/PlayerSheets.png");
 	loadTexture("defaultCrate", "Media/Assets/Objects/NonMovable/default_Crate.png");
 	loadTexture("bombCrate", "Media/Assets/Objects/Bombs/bomb.png");
 	loadTexture("bombVFX", "Media/Assets/Objects/Bombs/VFX/tile004.png");
@@ -27,6 +27,7 @@ void TextureManager::loadAll()
 
 	//
 	loadTexture("powerUp-1", "Media/Assets/Objects/PowerUp/AddBomb.png");
+	loadTexture("Door", "Media/Assets/Objects/PowerUp/Door.png");
 	
 
 	//BG Divider

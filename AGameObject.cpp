@@ -127,6 +127,11 @@ void AGameObject::setPosition(float x, float y)
 	this->transformable.setPosition(x, y);
 }
 
+void AGameObject::setTextureRect(int left, int top, int width, int height)
+{
+	this->sprite->setTextureRect(sf::IntRect(left, top, width, height));
+}
+
 void AGameObject::attachComponent(AComponent* component)
 {
 	this->componentList.push_back(component);

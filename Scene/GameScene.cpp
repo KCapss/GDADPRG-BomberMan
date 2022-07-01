@@ -14,7 +14,8 @@
 #include "../BombObject.h"
 #include "../BombVFX.h"
 #include "../EnemyObject.h"
-#include "../Component/EnemySpawnHandler.h"
+#include "../DoorObject.h"
+
 
 
 //All UI
@@ -25,6 +26,7 @@
 //AllComponent
 #include "../Component/BoxSpawner.h"
 #include "../Component/PowerUpSpawner.h"
+#include "../Component/EnemySpawnHandler.h"
 
 
 //AllPool
@@ -56,7 +58,7 @@ void GameScene::onLoadObjects()
 
 	//Level Setup
 	PlayerState::getInstance()->setActivePowerUp(PowerUPType::IncreaseBombCount);
-	PlayerState::getInstance()->setEnemCount(5);
+	PlayerState::getInstance()->setEnemCount(2);
 
 
 	//Physics
@@ -76,6 +78,9 @@ void GameScene::onLoadObjects()
 
 	//PowerUp and Exit
 
+	DoorObject* door = new DoorObject("Door");
+	GameObjectManager::getInstance()->addObject(door);
+
 	EmptyGameObject* powerUpManager = new EmptyGameObject("PowerUpManager");
 	PowerUpSpawner* powerUpSpawner = new PowerUpSpawner (1, "PowerUpSpawner", "IncreaseBombCount", powerUpManager);
 
@@ -88,7 +93,7 @@ void GameScene::onLoadObjects()
 
 	//Box Spawning
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(40, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(5, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);

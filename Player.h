@@ -18,6 +18,8 @@ class Player :
 public:
 	Player(std::string name);
 	void initialize();
+	
+	
 
 	//Setter
 	void changeOrientation(ObjectFacing playerOrientation);

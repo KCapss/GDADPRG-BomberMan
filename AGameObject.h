@@ -2,6 +2,7 @@
 #include  <string>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
 
 #include"Component/AComponent.h"
 
@@ -21,6 +22,7 @@ public:
 	void attachChild(AGameObject* child);
 	void detachChild(AGameObject* child);
 	void setPosition(float x, float y);
+	void setTextureRect(int left, int top, int width, int height);
 
 	//New - ComponentSystem
 	void attachComponent(AComponent* component);

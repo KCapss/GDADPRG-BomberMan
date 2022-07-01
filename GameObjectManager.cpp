@@ -61,6 +61,10 @@ void GameObjectManager::update(sf::Time deltaTime)
 		else if (ApplicationManager::getInstance()->isPaused())
 			this->findObjectByName("GameOver")->update(deltaTime);
 	}
+
+	if (ApplicationManager::getInstance()->isPaused()) {
+		cout << "is Paused" << endl;
+	}
 }
 
 void GameObjectManager::draw(sf::RenderWindow* window)

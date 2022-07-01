@@ -95,7 +95,7 @@ sf::Vector2f TileMapState::randomizeSpawn(string name)
 					}
 
 					else {
-						cout << "Spawn Completeed" << endl;
+						
 						return this->mapEnvinronment[i][j];
 					}
 						
@@ -119,12 +119,12 @@ bool TileMapState::spawnPriorities(string name)
 
 			//For PowerUp
 			if (mapLayout[key]->getName() == "PowerUp" &&
-				(name != "PowerUp" || name != "EndLevel")) {
+				(name != "PowerUp" && name != "EndLevel")) {
 				return true;
 			}
 
 			if (mapLayout[key]->getName() == "EndLevel" &&
-				(name != "PowerUp" || name != "EndLevel")) {
+				(name != "PowerUp" && name != "EndLevel")) {
 				return true;
 			}
 		}
@@ -150,7 +150,7 @@ sf::Vector2f TileMapState::lookSpawnPriorities(string name)
 		}
 	}
 
-	cout << "false" << endl;
+	
 	return sf::Vector2f(0, 0);
 }
 
@@ -353,7 +353,6 @@ sf::Vector2f TileMapState::onInitiateExplotion()
 		}
 	}
 
-	cout << "Too many explotion " << endl;
 
 }
 

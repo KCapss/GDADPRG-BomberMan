@@ -7,6 +7,7 @@
 #include"Component/PlayerInputController.h"
 #include"Component/PlayerMovement.h"
 #include"Component/Renderer.h"
+#include"Component/PlayerAnimation.h"
 
 #include <iostream>
 
@@ -23,10 +24,14 @@ void Player::initialize()
 	std::cout << " Declared as " << this->getName() << std::endl;
 	
 	//initialize Sprite
-	sf::Sprite* sprite = new sf::Sprite();
+	this->sprite = new sf::Sprite();
 	sprite->setTexture(*TextureManager::getInstance()->getTexture("bomberMan"));
-	sf::Vector2u textureSize = sprite->getTexture()->getSize();
+
+	this->setTextureRect(0, 0, 64, 64);
+
+	sf::Vector2u textureSize = sf::Vector2u(64, 64);
 	sprite->setOrigin(textureSize.x / 2, textureSize.y / 2);
+
 	this->transformable.setPosition(Game::GAME_WINDOW_WIDTH / 2, Game::GAME_WINDOW_HEIGHT / 2);
 	this->transformable.setScale(sf::Vector2f(0.9f, 0.83f));
 
@@ -41,6 +46,10 @@ void Player::initialize()
 	PlayerMovement* movement = new PlayerMovement("MyMovement");
 	this->attachComponent(movement);
 
+	PlayerAnimation* animation = new PlayerAnimation("MyAnimation");
+	this->attachComponent(animation);
+	animation->loadAll();
+
 	this->collider = new Collider("Player");
 	collider->setLocalBounds(sprite->getGlobalBounds());
 	collider->setCollisionListener(this);
@@ -50,6 +59,7 @@ void Player::initialize()
 	PathManager::getInstance()->trackObject(this->collider);
 
 }
+
 
 void Player::changeOrientation(ObjectFacing playerOrientation)
 {
@@ -116,6 +126,11 @@ void Player::onCollisionEnter(AGameObject* contact)
 
 	if (contact->getName().find("Detonator") != std::string::npos) {
 		cout << " you hit PowerUPDetonate" << endl;
+	}
+
+	if (contact->getName().find("Door") != std::string::npos 
+		&& PlayerState::getInstance()->retrieveEnemCount() == 0) {
+		cout << " you win" << endl;
 	}
 	
 }

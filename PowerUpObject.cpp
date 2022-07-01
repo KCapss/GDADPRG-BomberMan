@@ -12,7 +12,6 @@
 #include "ObjectPooling/ObjectPoolHolder.h"
 
 
-
 #include "Component/Renderer.h"
 //#include "Component/EnemyBehavior.h"
 
@@ -36,7 +35,7 @@ void PowerUpObject::initialize()
     
     sf::Vector2u textureSize = sprite->getTexture()->getSize();
     sprite->setOrigin(textureSize.x / 2, textureSize.y / 2);
-    this->sprite->setScale(0.8f, 0.8f);
+    this->sprite->setScale(0.6f, 0.6f);
 
     
     //Component system

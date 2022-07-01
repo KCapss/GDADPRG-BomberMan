@@ -2,6 +2,8 @@
 #include "TextureManager.h"
 #include "Game.h"
 
+#include "PlayerState.h"
+
 #include"Component/PlayerInputController.h"
 #include"Component/PlayerMovement.h"
 #include"Component/Renderer.h"
@@ -93,8 +95,25 @@ void Player::onCollisionEnter(AGameObject* contact)
 		cout << " you died" << endl;
 	}
 
+
+	//For PowerUP
 	if (contact->getName().find("IncreaseBombCount") != std::string::npos) {
-	cout << " you hit PowerUP" << endl;
+		PlayerState::getInstance()->incrementBombCount();
+		cout << " you hit PowerUPBomb" << endl;
+	}
+
+	if (contact->getName().find("PowerIncrease") != std::string::npos) {
+		PlayerState::getInstance()->incrementMaxRange();
+		cout << " you hit PowerUPPower" << endl;
+	}
+
+	if (contact->getName().find("IncreasSpeed") != std::string::npos) {
+		
+		cout << " you hit PowerUPSpeed" << endl;
+	}
+
+	if (contact->getName().find("Detonator") != std::string::npos) {
+		cout << " you hit PowerUPDetonate" << endl;
 	}
 	
 }

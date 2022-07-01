@@ -8,6 +8,7 @@
 #include "GameObjectManager.h"
 #include "TileMapState.h"
 #include "Physics/PathManager.h"
+#include "SFXManager.h"
 
 
 //Component
@@ -69,6 +70,13 @@ void BombObject::onRelease()
 
 void BombObject::onActivate()
 {
+
+    //SFX
+    sf::Sound* sound = new sf::Sound();
+    sound->setBuffer(*SFXManager::getInstance()->getSoundBuffer("placeBombs"));
+    sound->play();
+    
+    //Location
     Player* player = (Player*)GameObjectManager::getInstance()->findObjectByName("Player");
     sf::Vector2f position = player->getTransformable()->getPosition();
 

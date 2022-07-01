@@ -40,7 +40,7 @@ protected:
 
 
 private:
-	const float SPEED_MULLTIPLIER = 300.0f;
+	float SPEED_MULLTIPLIER = 300.0f;
 
 	int usedBombCount;
 	

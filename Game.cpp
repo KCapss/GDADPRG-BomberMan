@@ -9,6 +9,7 @@
 #include "Manager/ApplicationManager.h"
 #include "TileMapState.h"
 #include "PlayerState.h"
+#include "SFXManager.h"
 
 
 #include "Screen/MainMenuScreen.h"
@@ -30,6 +31,7 @@ Game::Game() : mWindow(sf::VideoMode(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT), "Ke
 	ApplicationManager::getInstance()->initialize(&mWindow);
 	TileMapState::getInstance()->loadAll();
 	PlayerState::getInstance()->initialize();
+	SFXManager::getInstance()->loadAll();
 
 	//register scene
 	SceneManager::getInstance()->registerScene(new TitleScene());

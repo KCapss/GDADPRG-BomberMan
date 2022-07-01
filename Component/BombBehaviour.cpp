@@ -6,6 +6,7 @@
 #include "../TextureManager.h"
 #include "../TileMapState.h"
 #include "../PlayerState.h"
+#include "../SFXManager.h"
 
 #include "../BombObject.h"
 #include "../GameObjectManager.h"
@@ -21,8 +22,14 @@ void BombBehaviour::perform()
 
 	if (this->ticks > timer || bomb->hitConfirmed()) {
 		reset();
-		//Do some action
 
+		//Load SFX
+		sf::Sound* sound = new sf::Sound();
+		sound->setBuffer(*SFXManager::getInstance()->getSoundBuffer("explode"));
+		sound->play();
+
+
+		//Do Action
 		int maxRange = PlayerState::getInstance()->retrieveMaxRange();
 		int vfxTileCount = (maxRange * 4) + 1;
 

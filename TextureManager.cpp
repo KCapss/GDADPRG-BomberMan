@@ -21,7 +21,7 @@ void TextureManager::loadAll()
 	loadTexture("bomberMan", "Media/Down_00.png");
 	loadTexture("defaultCrate", "Media/Assets/Objects/NonMovable/default_Crate.png");
 	loadTexture("bombCrate", "Media/Assets/Objects/Bombs/bomb.png");
-	loadTexture("bombVFX", "Media/Assets/Objects/NonMovable/wall2_crate_09.png");
+	loadTexture("bombVFX", "Media/Assets/Objects/Bombs/VFX/tile004.png");
 	loadTexture("enem_1", "Media/Assets/Enemies/All_Enemies/IdleAnimation/Enem1_Left-1.png");
 
 

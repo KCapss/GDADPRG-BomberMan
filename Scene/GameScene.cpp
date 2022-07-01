@@ -85,7 +85,7 @@ void GameScene::onLoadObjects()
 
 	//Box Spawning
 	EmptyGameObject* boxManager = new EmptyGameObject("EnemiesManager");
-	BoxSpawner* boxSpawner = new BoxSpawner(1, "SwarmHandler", boxManager);
+	BoxSpawner* boxSpawner = new BoxSpawner(20, "SwarmHandler", boxManager);
 
 	boxManager->attachComponent(boxSpawner);
 	GameObjectManager::getInstance()->addObject(boxManager);
@@ -120,7 +120,7 @@ void GameScene::onLoadObjects()
 
 	//Enemy
 	EmptyGameObject* enemiesManager = new EmptyGameObject("EnemiesManager");
-	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(1, "EnemySpawner", enemiesManager);
+	EnemySpawnHandler* enemySpawner = new EnemySpawnHandler(3, "EnemySpawner", enemiesManager);
 
 	enemiesManager->attachComponent(enemySpawner);
 	GameObjectManager::getInstance()->addObject(enemiesManager);

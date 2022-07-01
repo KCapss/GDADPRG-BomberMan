@@ -13,8 +13,8 @@ PlayerState* PlayerState::getInstance()
 
 void PlayerState::initialize()
 {
-	this->maxRange = 4;
-	this->maxBombCount = 5;
+	this->maxRange = 1;
+	this->maxBombCount = 1;
 }
 
 void PlayerState::updatePos(sf::Vector2f pos)
